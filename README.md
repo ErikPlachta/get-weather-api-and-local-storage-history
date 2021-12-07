@@ -1,4 +1,4 @@
-# Group Project Project  
+# Weather Forcast App 
 > ( *name change pending* )
 
 ## Summary 
