@@ -9,31 +9,68 @@
 const apiKey ="d5291050dfed6abda18c09f0e663326d";
 
 
-// api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
+
+/*----------------------------------------------------------------------------*/
+//-- RUNNING PROGRAM
+
+function run(){
+    
+    //-- TESTING
+
+    let cityName = 'Charlotte';
+    let forecast = _get_City(cityName);
+    console.log("Testing: ",forecast);
+    
+    
+
+};
 
 /*----------------------------------------------------------------------------*/
 //-- GETTING DATA
 
 function _get_City(cityName) {
-    let forecast = fetch('http://api.openweathermap.org/data/2.5/forecast?q='+cityName+'&appid='+apiKey+'&cnt=5')
-                    .then(function(response) {
-                     // request was successful
-                        if (response.ok) {
-                            response.json().then(function(data) {
-                            console.log(data);
-                            });
-                        } 
-                        // general error
-                        else {
-                            consoel.log('Error: Data Not Found');
-                        }
-                    })
-                    // try catch error
-                    .catch(function(error) {
-                        console.log("Unable to connect to URL")
-                    });
-    return forecast;
+    //-- Access the open weather map API by city name
+    
+    // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
+    fetch('http://api.openweathermap.org/data/2.5/forecast?q='+cityName+'&appid='+apiKey+'&cnt=5',
+            { method: 'GET'}
+    ).then(function(response) {
+        return response.json();
+    }).then(function(json){
+
+    });
+        
+        
+        // // request was successful
+        //     if (response.ok) {
+        //         response.json().then(function(data) {
+        //         console.log(data);
+        //         forecast = response;
+        //         });
+        //     } 
+        //     // general error
+        //     else {
+        //         console.log('ERROR: '+response.status+', Data Not Found for',cityName,'.');
+        //         // results = 'ERROR:',response.status,'. Data Not Found for ',cityName,'.';
+        //         forecast = response;
+        //     }
+        // })
+        // // try catch error
+        // .catch(function(error) {
+        //     console.log('ERROR: '+response.status,error)
+        //     // forecast = 'ERROR: '+response.status,error;
+        // });
 };
+
+
+/*----------------------------------------------------------------------------*/
+//-- BUILD RESULTS
+
+function _set_Results(response){
+    //-- Get's results from _get_City(cityName), builds content
+
+    //
+}
 
 
 
@@ -43,7 +80,6 @@ function _get_City(cityName) {
 
 
 /*----------------------------------------------------------------------------*/
-//-- TESTING
+//-- RUNNING 
 
-let cityName = 'Charlotte';
-console.log(_get_City(cityName));
+run();
