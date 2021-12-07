@@ -1,4 +1,4 @@
-# Weather Forcast App 
+# a Weather_Forecast_App
 > ( *name change pending* )
 
 ## Summary 
