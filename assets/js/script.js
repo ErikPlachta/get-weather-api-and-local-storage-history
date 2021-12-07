@@ -15,7 +15,7 @@ const apiKey ="d5291050dfed6abda18c09f0e663326d";
 //-- GETTING DATA
 
 function _get_City(cityName) {
-    let forecast = fetch('http://api.openweathermap.org/data/2.5/forecast?q='+cityName+'&appid='+apiKey)
+    let forecast = fetch('http://api.openweathermap.org/data/2.5/forecast?q='+cityName+'&appid='+apiKey+'&cnt=5')
                     .then(function(response) {
                      // request was successful
                         if (response.ok) {
