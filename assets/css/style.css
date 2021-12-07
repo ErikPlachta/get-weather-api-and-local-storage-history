@@ -1,0 +1,93 @@
+/* -------------------------------------------------------------------------- */
+/* :ROOT --> START */
+:root {
+
+    /* COLORS  */
+    --color_Primary: #172a35;
+    --color_Accent: rgb(111, 255, 233);
+    
+    /* COLORS - ALPHA */
+    --color_shadow_025_black:  rgba(0,0,0,.25);
+    --color_shadow_01_black:   rgba(0,0,0,.1);
+  
+    /* TITLE */
+    --title_Color: #fefdff
+    --title_Font: #0b132b;
+    
+    /* BACKGROUND */
+    --bg_Body: #F9F9F9; /* A very light shade of white gray */    
+    --bg_Container: #fefdff; /* A variation of white gray  */
+    --bg_Container_Alt:  #fefdff; /* A variation of white gray  */
+    
+    /* BUTTONS */
+    
+    /* BOX SHADOWS*/
+    --boxShadow_Top: 0 -.1rem .5rem var(--color_shadow_025_black); /* offset-x | offset-y | blur-radius | color */
+    --boxShadow_inset_Top:  inset 0px 11px 10px -10px var(--color_shadow_025_black); /* offset-x | offset-y | blur-radius | color */
+    --boxShadow_Inset_bottom:  inset 0px -11px 8px -10px var(--color_shadow_025_black); /* offset-x | offset-y | blur-radius | color */
+    --boxShadow_inset_Top_Right:  inset -10px 9px 7px -10px var(--color_shadow_025_black); /* offset-x | offset-y | blur-radius | color */
+    --boxShadow_bottom_accent_Primary: 0 .01rem .4rem var(--color_Accent); /* offset-x | offset-y | blur-radius | color */
+    
+    /* BOX SHADOWS - EFFECTS*/
+    --boxShadow_top_hover_black_25a: 0 -.75rem 1rem var(--color_shadow_025_black); /* offset-x | offset-y | blur-radius | color */
+    --boxShadow_top_hover_black_1a:  0 -.1rem .5rem var(--color_shadow_01_black); /* offset-x | offset-y | blur-radius | color */
+    
+    
+    /* BORDERS */
+    --border_shadow_1px_25a: 1px solid var(--color_shadow_025_black);
+    --border_shadow_1px_1a: 1px solid var(--color_shadow_01_black);
+  }
+  
+/* :ROOT --> END */
+/* -------------------------------------------------------------------------- */
+/* ALL ELEMENTS --> START */
+
+/* Defaults for Everything */
+* {
+    /* Ensures starting without defaults for easy control */
+    padding: 0;
+    margin: 0;
+  }
+  
+
+body {
+    box-sizing: border-box; /* prevent padding overflow */
+    background-color: var(--bg_Body);
+}
+
+  button {
+   /* Default button styling */
+    box-shadow: var(--boxShadow_inset_Top_Right);
+  }
+
+
+/* ALL ELEMENTS --> END */
+/* -------------------------------------------------------------------------- */
+/* HEADER & NAV --> START */
+
+header {
+    /* Animation on loading */
+    -webkit-transition: background .2s ease-in-out;
+    transition: background .2s ease-in-out;
+}
+
+nav {
+
+}
+
+/* HEADER & NAV --> END */
+/* -------------------------------------------------------------------------- */
+/* FOOTER --> START */
+
+
+/* FOOTER --> END */
+/* -------------------------------------------------------------------------- */
+/* MEDIA SPECIFIC --> START  */
+
+
+@media screen and (max-width: 450px) {
+
+}
+
+/* MEDIA SPECIFIC --> END  */
+/* -------------------------------------------------------------------------- */
