@@ -49,34 +49,53 @@ const apiKey ="d5291050dfed6abda18c09f0e663326d";
 /*----------------------------------------------------------------------------*/
 //-- GETTING DATA
 
-function _get_City(cityName) {
+// function _get_City(cityName) {
+    
+    
     //-- Access the open weather map API by city name    
-
+    
+const _get_Forecast_City = async (cityName) => {
+    
     // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
-    const request = async () => {
-        const response = await 
-            fetch('http://api.openweathermap.org/data/2.5/forecast?q='
-                +cityName 
-                +'&appid='
-                +apiKey
-                +'&cnt=5',
-                { method: 'GET'}
-            );
-        const json = await response.json();
-        console.log(json);
-    };
-
-    return request();
+    const response = (async () => {
+        // let cityName = 'Charlotte';
+        const res = await fetch('http://api.openweathermap.org/data/2.5/forecast?q='+ cityName +'&appid=' +apiKey +'&cnt=5',{ method: 'GET'});
+        const json = await res.json();
+        console.log("Got results: ",json);
+        _set_Results(json)
+      })();
+      return response;
 };
 
 
 /*----------------------------------------------------------------------------*/
-//-- BUILD RESULTS
+//-- BUILDING RESULTS
 
 function _set_Results(response){
     //-- Get's results from _get_City(cityName), builds content
 
-    //
+    console.log("//-- START --> function _set_Results(response)")
+    console.log(response)
+
+
+    //build reasponse container
+    // Object.keys(JSON.parse(response)).forEach((key) => {    
+    //     console.log(key);
+    //  });
+
+    for (key in response){
+        console.log(key);
+    }
+
+
+
+        // build response header
+
+        //build response days
+    
+
+    console.log("//-- END --> function _set_Results(response)")
+    return null;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -416,16 +435,8 @@ function _set_DemoData(){
 function run(){
     
     //-- TESTING
-
-    let cityName = 'Charlotte';
-    let forecast = _get_City(cityName);
-    console.log("Testing: ",forecast);
+    let testing = true;
     
-    
-
-
-    let testing = false;
-
     if (testing == false){
         /* 1. Load the database */
         _load_Database();
@@ -438,9 +449,24 @@ function run(){
     }
     else {
         console.log("//-- RUNNING TEST")
-        _set_DemoData();
+        
+        // _set_DemoData();
+        
+        let cityName = 'Charlotte';
+        
+        const response = _get_Forecast_City(cityName);
+
+        //wait 2 seconds then push results to dict
+        // setTimeout(() => {  _set_Results(response); }, 2000);
+
+        
     }
 };
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  
 
 run();
 
