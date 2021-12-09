@@ -46,57 +46,27 @@ var user_FirstLogin = false;
 const apiKey ="d5291050dfed6abda18c09f0e663326d";
 
 
-
-/*----------------------------------------------------------------------------*/
-//-- RUNNING PROGRAM
-
-function run(){
-    
-    //-- TESTING
-
-    let cityName = 'Charlotte';
-    let forecast = _get_City(cityName);
-    console.log("Testing: ",forecast);
-    
-    
-
-};
-
 /*----------------------------------------------------------------------------*/
 //-- GETTING DATA
 
 function _get_City(cityName) {
-    //-- Access the open weather map API by city name
-    
-    // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
-    fetch('http://api.openweathermap.org/data/2.5/forecast?q='+cityName+'&appid='+apiKey+'&cnt=5',
-            { method: 'GET'}
-    ).then(function(response) {
-        return response.json();
-    }).then(function(json){
+    //-- Access the open weather map API by city name    
 
-    });
-        
-        
-        // // request was successful
-        //     if (response.ok) {
-        //         response.json().then(function(data) {
-        //         console.log(data);
-        //         forecast = response;
-        //         });
-        //     } 
-        //     // general error
-        //     else {
-        //         console.log('ERROR: '+response.status+', Data Not Found for',cityName,'.');
-        //         // results = 'ERROR:',response.status,'. Data Not Found for ',cityName,'.';
-        //         forecast = response;
-        //     }
-        // })
-        // // try catch error
-        // .catch(function(error) {
-        //     console.log('ERROR: '+response.status,error)
-        //     // forecast = 'ERROR: '+response.status,error;
-        // });
+    // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
+    const request = async () => {
+        const response = await 
+            fetch('http://api.openweathermap.org/data/2.5/forecast?q='
+                +cityName 
+                +'&appid='
+                +apiKey
+                +'&cnt=5',
+                { method: 'GET'}
+            );
+        const json = await response.json();
+        console.log(json);
+    };
+
+    return request();
 };
 
 
@@ -140,7 +110,9 @@ function get_Database(){
     
     // Get Database from local storage, build into JSON dict
     let database_Current = JSON.parse(localStorage.getItem(database_Name));
-    console.log("function get_Database(): database_Current: ",database_Current);
+    
+    // console.log("function get_Database(): database_Current: ",database_Current);
+
     // If database exists
     if (database_Current != null) {
         
@@ -299,7 +271,7 @@ function set_Database(entry) {
 
     //-- END -> BUILDING DICTIONARY  
     
-     console.log("function set_Database(entry): database_New ", database_New);
+    //  console.log("function set_Database(entry): database_New ", database_New);
 
     // Updating Database
     localStorage.setItem(database_Name, JSON.stringify(database_New));
@@ -328,7 +300,7 @@ function _load_Database() {
                     //-- last login of the day
                     login_Last: datetime_12(),
                      //-- record of search parameters
-                    search_Requests: {},
+                    search_History: {},
                     //-- record of what was clicked on
                     view_History: {}
                 },
@@ -362,7 +334,7 @@ function _load_Database() {
     };
     //-- end of database_Default
 
-    console.log("function _load_Database() database_Default: ",database_Default) //TODO:: 12/08/2021 #EP || Delete console.log once done testing
+    // console.log("function _load_Database() database_Default: ",database_Default) //TODO:: 12/08/2021 #EP || Delete console.log once done testing
     
     // Set Default Database 
     set_Database(database_Default);
@@ -393,7 +365,7 @@ function _set_DemoData(){
                     //-- last login of the day
                     login_Last: (moment().format("YYYYMMDD hh:mm:ss:ms a")),
                      //-- record of search parameters
-                    search_Requests: {},
+                    search_History: {},
                     //-- record of what was clicked on
                     view_History: {}
                 },
@@ -440,22 +412,37 @@ function _set_DemoData(){
 /*----------------------------------------------------------------------------*/
 //-- RUNNING --> START
 
-let testing = false;
 
-if (testing == false){
-    /* 1. Load the database */
-    _load_Database();
+function run(){
+    
+    //-- TESTING
 
-    /* 2. Update Page Setings */
+    let cityName = 'Charlotte';
+    let forecast = _get_City(cityName);
+    console.log("Testing: ",forecast);
+    
+    
 
-    /* 3. Load APIs */
 
-    /* 4. Build Page */
-}
-else {
-    console.log("//-- RUNNING TEST")
-    _set_DemoData();
-}
+    let testing = false;
+
+    if (testing == false){
+        /* 1. Load the database */
+        _load_Database();
+
+        /* 2. Update Page Setings */
+
+        /* 3. Load APIs */
+
+        /* 4. Build Page */
+    }
+    else {
+        console.log("//-- RUNNING TEST")
+        _set_DemoData();
+    }
+};
+
+run();
 
 
 //-- RUNNING --> END
