@@ -53,31 +53,142 @@
 body {
     box-sizing: border-box; /* prevent padding overflow */
     background-color: var(--bg_Body);
+    font-family: Roboto, 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-  button {
-   /* Default button styling */
-    box-shadow: var(--boxShadow_inset_Top_Right);
-  }
+button {
+  /* Default button styling */
+  box-shadow: var(--boxShadow_inset_Top_Right);
+}
 
+h1,h2,h3,h4,h5{
+  padding: 0;
+  margin: 0;
+}
+
+h1{
+  font-weight: 400;
+}
+h2 {
+  font-weight: 400;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  margin: 1rem;
+}
 
 /* ALL ELEMENTS --> END */
 /* -------------------------------------------------------------------------- */
 /* HEADER & NAV --> START */
 
 header {
-    /* Animation on loading */
-    -webkit-transition: background .2s ease-in-out;
-    transition: background .2s ease-in-out;
+  /* Animation on loading */
+  -webkit-transition: background .2s ease-in-out;
+  transition: background .2s ease-in-out;
+  padding: .5rem;
+  background-color: var(--color_Primary);
+  color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#appBranding {
+  margin: 0 2rem;
 }
 
 nav {
-
+  /* margin: 0 2rem; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  /* text-align: right; */
+}
+nav span {
+  margin: 2rem 2rem 0 2rem;
+  text-align: bottom;
 }
 
-/* HEADER & NAV --> END */
+/* END --> HEADER & NAV */
 /* -------------------------------------------------------------------------- */
-/* FOOTER --> START */
+/* START --> FORECAST */
+
+.response,
+.forecast {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+
+.city {
+  width: 100%;
+  /* box-shadow: var(--boxShadow_Inset_bottom); */
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  text-align: center;
+  padding-bottom: 1rem;
+  margin-right: 5rem;
+  align-items: center;
+  font-size: 1.25rem;
+}
+
+
+.city h1 {
+  font-size: 2rem;
+  padding-bottom: 1rem;
+  
+}
+
+.city img {
+  max-width: 50px;
+}
+
+#days{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.day {
+  display: flex;
+  flex-flow: wrap;
+  flex-direction: column;
+  justify-content: space-around;
+  /* border: 1px solid red; */
+  width: 100px;
+  align-items: center;
+  box-shadow: var(--boxShadow_Inset_bottom);
+  padding: 1rem 0;
+  border: var(--border_shadow_1px_1a)
+}
+
+.day span {
+  padding: 0;
+}
+/* .day_Header, */
+.day_Details{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-flow: wrap;
+}
+
+
+
+/* END --> DAYS */
+/* -------------------------------------------------------------------------- */
+/* START --> FOOTER */
 
 
 /* FOOTER --> END */

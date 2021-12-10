@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     
-    <title>Project 1 - Home</title>
+    <title>Weather App</title>
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,8 +23,6 @@
     />
     <!-- Custom Stylesheets and Script -->
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <script src='./assets/js/script.js'></script>
-    
   </head>
 
 <!-- HEAD -> END -->
@@ -35,11 +33,34 @@
     <!------------------------------------------------------------------------->
     <!-- HEADER -> START -->
     <header>
-        <nav></nav>
+      <span id='appBranding'>
+        <span class="appName"></span> <!-- Icon to go here -->
+        <h1>Weather App</h1>
+        <p id="appTagline">A tagline here</p>
+      </span>
+      <nav>
+        <span>New Search</span>
+        <span>Search History</span>
+        <span>Settings</span>
+        <span>About</span>
+      </nav>
     </header>
     <!-- HEADER -> END -->
     <!------------------------------------------------------------------------->
     
+    <section class='container response forecast'>
+      <!-- Complete Payload Response from API -->
+
+      <!-- Weather Forecast -->
+      
+        
+        <section id="city"></section>
+        
+        <section id="days"></section>
+      
+      
+      
+    </section>
 
     <!------------------------------------------------------------------------->
     <!-- FOOTER -> START-->
@@ -48,8 +69,20 @@
     <!------------------------------------------------------------------------->
     <!-- SCRIPT -> START-->
 
+    
+    <!-- jQUERY -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!-- Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+            integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer">
+    </script>
+    
+    <!-- CUSTOM JS -->
+    <script src='./assets/js/script.js'></script>
+    
     <!-- TODO:: Determine scripts to use  -->
-    <script src=''></script>
 
     <!-- SCRIPT -> END-->
 </body>
