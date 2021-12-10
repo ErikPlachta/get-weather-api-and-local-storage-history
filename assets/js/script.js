@@ -189,8 +189,8 @@ function _build_Current(response){
     .toLocaleDateString(
         'en-us',
         { 
-            day: 'numeric',
-            weekday: 'long'
+            weekday: 'long',
+            day: 'numeric'
         }
     );
 
@@ -201,7 +201,7 @@ function _build_Current(response){
         + '<span class="temp">' + city_JSON.main.temp + '°</span>'
         + '<span class="humidity">' + city_JSON.main.humidity + '%</span>'
         + '<span clss="windspeed">' + city_JSON.wind.speed + ' mph</span>'
-        // + '<span clss="windspeed">' + city_JSON.wind + ' </span>';
+        + '<span clss="windspeed">' + 'XX UV' + ' </span>';
             
     // -- add day to page
     city_Section.appendChild(city_Div);

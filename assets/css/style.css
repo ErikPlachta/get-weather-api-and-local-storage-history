@@ -119,6 +119,28 @@ nav span {
 /* -------------------------------------------------------------------------- */
 /* START --> DAYS */
 
+.city {
+  width: 100%;
+  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  text-align: center;
+  /* margin: 1rem; */
+  width: 20%;
+}
+
+.city h2 {
+  font-size: 2rem;
+  padding-bottom: 1rem;
+  
+}
+.city span {
+  /* flex: 1; */
+}
+
+
 #days{
   display: flex;
   flex-wrap: wrap;
