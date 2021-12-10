@@ -49,17 +49,44 @@ const apiKey ="d5291050dfed6abda18c09f0e663326d";
 /*----------------------------------------------------------------------------*/
 //-- GETTING DATA
 
-// function _get_City(cityName) {
+
+
+const _get_Forecast_City_5Days = async (cityName) => {
+    
+    // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
+    const response = (async () => {
+        let cityName = 'Charlotte';
+        const res = await fetch('http://api.openweathermap.org/data/2.5/forecast?q='
+            + cityName
+            +'&appid=' +apiKey
+            +'&cnt=5',
+            { method: 'GET'}
+        );
+            
+        const json = await res.json();
+        console.log("Got results: ",json);
+        _set_Results(json)
+      })();
+      return response;
+};
+
+
     
     
-    //-- Access the open weather map API by city name    
-    
+//-- Access the open weather map API by city name        
 const _get_Forecast_City = async (cityName) => {
     
     // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
     const response = (async () => {
         // let cityName = 'Charlotte';
-        const res = await fetch('http://api.openweathermap.org/data/2.5/forecast?q='+ cityName +'&appid=' +apiKey +'&cnt=5',{ method: 'GET'});
+        // const res = await fetch('http://api.openweathermap.org/data/2.5/forecast?q='+ cityName +'&appid=' +apiKey +'&cnt=5',{ method: 'GET'});
+        // https://openweathermap.org/api/one-call-api
+        const res = await fetch('http://api.openweathermap.org/data/2.5/onecall?lat=35.2271&lon=-80.8431'
+            +'&exclude=hourly,minutely'
+            +'&appid=' +apiKey
+            +'&cnt=5',
+            { method: 'GET'}
+        );
         const json = await res.json();
         console.log("Got results: ",json);
         _set_Results(json)
@@ -76,15 +103,49 @@ function _set_Results(response){
 
     console.log("//-- START --> function _set_Results(response)")
     console.log(response)
-
+    console.log(response.daily)
+    
+    
 
     //build reasponse container
     // Object.keys(JSON.parse(response)).forEach((key) => {    
     //     console.log(key);
     //  });
 
-    for (key in response){
-        console.log(key);
+    //-- Get days section
+    let days_Section = document.getElementById("days");
+
+    
+    const days = response.daily;
+
+    for (day in days){
+        
+        let day_JSON = days[day];
+        
+        //-- Make DIV to hole day
+        var div = document.createElement("div");
+
+        // set the div class as day for css
+        div.setAttribute("class","day");
+        // Make animals ID the div element ID
+        
+        div.setAttribute("id", day_JSON.dt);
+
+
+
+        var dayname = new Date(day_JSON.dt * 1000).toLocaleDateString('en-us', { weekday: 'long', day: 'numeric' });
+
+        //-- build day
+        div.innerHTML = 
+            '<span class="date">' + dayname + '</span>'
+            +'<img class="weathericon" src="http://openweathermap.org/img/w/' + day_JSON.weather[0].icon + '.png">'
+            + '<span class="temp">' + day_JSON.temp.day + '</span>'
+            + '<span clss="windspeed">' + day_JSON.wind_speed + '</span>'
+            + '<span class="humidity">' + day_JSON.humidity + '</span>';
+        
+        days_Section.appendChild(div);
+        
+        
     }
 
 
@@ -455,6 +516,8 @@ function run(){
         let cityName = 'Charlotte';
         
         const response = _get_Forecast_City(cityName);
+
+        // _get_Forecast_City_5Days(cityName);
 
         //wait 2 seconds then push results to dict
         // setTimeout(() => {  _set_Results(response); }, 2000);

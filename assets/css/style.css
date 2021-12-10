@@ -115,9 +115,36 @@ nav span {
   text-align: bottom;
 }
 
-/* HEADER & NAV --> END */
+/* END --> HEADER & NAV */
 /* -------------------------------------------------------------------------- */
-/* FOOTER --> START */
+/* START --> DAYS */
+
+#days{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.day {
+  display: flex;
+  flex-flow: wrap;
+  flex-direction: column;
+  justify-content: space-around;
+  border: 1px solid red;
+  width: 150px;
+  align-items: center;
+}
+
+.day span {
+  
+}
+
+
+
+/* END --> DAYS */
+/* -------------------------------------------------------------------------- */
+/* START --> FOOTER */
 
 
 /* FOOTER --> END */
