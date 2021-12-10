@@ -101,12 +101,10 @@ function _build_Forecast(response){
         //--- If the current day, grab the UVI
         if (numberDays == 1) {
             document.getElementById("uvi").innerText = day_JSON.uvi + " uvi";
+        };
 
-        }
         //-- If day 1 - 5, build content
         if (numberDays < 6){
-        
-            
         
             //-- Make DIV to hold each day
             var div = document.createElement("div");
@@ -119,7 +117,7 @@ function _build_Forecast(response){
                 .toLocaleDateString(
                     'en-us',
                     { 
-                        day: 'numeric',
+                        // day: 'numeric',
                         weekday: 'long'
                     }
                 );
@@ -131,7 +129,7 @@ function _build_Forecast(response){
                 +'<img class="weathericon" src="http://openweathermap.org/img/w/' + day_JSON.weather[0].icon + '.png">'
                 + '<span class="temp">' + day_JSON.temp.day + '°</span>'
                 + '<span class="humidity">' + day_JSON.humidity + '%</span>'
-                + '<span clss="windspeed">' + day_JSON.wind_speed + ' mph</span>'
+                + '<span clss="windspeed">' + day_JSON.wind_speed + ' mph</span>';
                 
             
             //-- add day to page
@@ -196,19 +194,20 @@ function _build_Current(response){
     // set the div class as day for css
     city_Div.setAttribute("class","city");
 
-    var city_Date = new Date(city_JSON.dt * 1000)
+    var city_Day = new Date(city_JSON.dt * 1000)
     .toLocaleDateString(
         'en-us',
         { 
             weekday: 'long',
-            day: 'numeric'
+            // day: 'numeric'
         }
     );
 
     city_Div.innerHTML = 
-        '<h2>'+city_JSON.name+'</h2>'
-        +'<span class="date">' + city_Date + '</span>'
+        '<h1>'+city_JSON.name+'</h1>'
+        +'<h3 class="date">' + city_Day + '</h3>'
         +'<img class="weathericon" src="http://openweathermap.org/img/w/' + city_JSON.weather[0].icon + '.png">'
+        
         + '<span class="temp">' + city_JSON.main.temp + '°</span>'
         + '<span class="humidity">' + city_JSON.main.humidity + '%</span>'
         + '<span class="windspeed">' + city_JSON.wind.speed + ' mph</span>'

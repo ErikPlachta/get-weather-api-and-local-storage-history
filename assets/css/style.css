@@ -117,29 +117,41 @@ nav span {
 
 /* END --> HEADER & NAV */
 /* -------------------------------------------------------------------------- */
-/* START --> DAYS */
+/* START --> FORECAST */
+
+.response,
+.forecast {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
 
 .city {
   width: 100%;
-  border: 1px solid red;
+  /* box-shadow: var(--boxShadow_Inset_bottom); */
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-around;
   text-align: center;
-  /* margin: 1rem; */
-  width: 20%;
+  padding-bottom: 1rem;
+  margin-right: 5rem;
+  align-items: center;
+  font-size: 1.25rem;
 }
 
-.city h2 {
+
+.city h1 {
   font-size: 2rem;
   padding-bottom: 1rem;
   
 }
-.city span {
-  /* flex: 1; */
-}
 
+.city img {
+  max-width: 50px;
+}
 
 #days{
   display: flex;
@@ -158,6 +170,7 @@ nav span {
   align-items: center;
   box-shadow: var(--boxShadow_Inset_bottom);
   padding: 1rem 0;
+  border: var(--border_shadow_1px_1a)
 }
 
 .day span {
