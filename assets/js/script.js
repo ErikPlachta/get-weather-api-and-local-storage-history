@@ -93,12 +93,20 @@ function _build_Forecast(response){
 
     //-- Itterate through days and build content
     for (day in days){
+        
+        //-- store first day for easy building
+        let day_JSON = days[day];
 
+        
+        //--- If the current day, grab the UVI
+        if (numberDays == 1) {
+            document.getElementById("uvi").innerText = day_JSON.uvi + " uvi";
+
+        }
         //-- If day 1 - 5, build content
         if (numberDays < 6){
         
-            //-- store first day for easy building
-            let day_JSON = days[day];
+            
         
             //-- Make DIV to hold each day
             var div = document.createElement("div");
@@ -118,11 +126,13 @@ function _build_Forecast(response){
 
             //-- build the day
             div.innerHTML = 
+                
                 '<span class="date">' + date_day + '</span>'
                 +'<img class="weathericon" src="http://openweathermap.org/img/w/' + day_JSON.weather[0].icon + '.png">'
                 + '<span class="temp">' + day_JSON.temp.day + '°</span>'
                 + '<span class="humidity">' + day_JSON.humidity + '%</span>'
-                + '<span clss="windspeed">' + day_JSON.wind_speed + ' mph</span>';
+                + '<span clss="windspeed">' + day_JSON.wind_speed + ' mph</span>'
+                
             
             //-- add day to page
             days_Section.appendChild(div);
@@ -201,8 +211,8 @@ function _build_Current(response){
         +'<img class="weathericon" src="http://openweathermap.org/img/w/' + city_JSON.weather[0].icon + '.png">'
         + '<span class="temp">' + city_JSON.main.temp + '°</span>'
         + '<span class="humidity">' + city_JSON.main.humidity + '%</span>'
-        + '<span clss="windspeed">' + city_JSON.wind.speed + ' mph</span>'
-        + '<span clss="windspeed">' + 'XX UV' + ' </span>';
+        + '<span class="windspeed">' + city_JSON.wind.speed + ' mph</span>'
+        + '<span class="uvi" id="uvi"></span>';
             
     // -- add day to page
     city_Section.appendChild(city_Div);

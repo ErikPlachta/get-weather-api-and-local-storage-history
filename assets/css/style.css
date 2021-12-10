@@ -154,7 +154,7 @@ nav span {
   flex-direction: column;
   justify-content: space-around;
   /* border: 1px solid red; */
-  width: 150px;
+  width: 100px;
   align-items: center;
   box-shadow: var(--boxShadow_Inset_bottom);
   padding: 1rem 0;
@@ -163,13 +163,12 @@ nav span {
 .day span {
   padding: 0;
 }
-
-.day img {
-  /* box-shadow: var(--boxShadow_inset_Top); */
-}
-
-.day span+span {
-  
+/* .day_Header, */
+.day_Details{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-flow: wrap;
 }
 
 
