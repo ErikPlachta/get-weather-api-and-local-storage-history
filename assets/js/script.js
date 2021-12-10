@@ -83,6 +83,7 @@ const _get_Forecast_City = async (cityName) => {
         // https://openweathermap.org/api/one-call-api
         const res = await fetch('http://api.openweathermap.org/data/2.5/onecall?lat=35.2271&lon=-80.8431'
             +'&exclude=hourly,minutely'
+            +'&units=imperial'
             +'&appid=' +apiKey,
             { method: 'GET'}
         );
@@ -130,26 +131,24 @@ function _set_Results(response){
         // set the div class as day for css
         div.setAttribute("class","day");
         // Make animals ID the div element ID
-        
-        div.setAttribute("id", day_JSON.dt);
 
-
-
-        var dayname = new Date(day_JSON.dt * 1000).toLocaleDateString(
-                                                        'en-us',
-                                                        { 
-                                                            weekday: 'long', 
-                                                            day: 'numeric' 
-                                                        }
-                                                    );
+        //-- convert date time unicode to str
+        var date_day = new Date(day_JSON.dt * 1000)
+            .toLocaleDateString(
+                'en-us',
+                { 
+                    day: 'numeric',
+                    weekday: 'long'
+                }
+            );
 
         //-- build day
         div.innerHTML = 
-            '<span class="date">' + dayname + '</span>'
+            '<span class="date">' + date_day + '</span>'
             +'<img class="weathericon" src="http://openweathermap.org/img/w/' + day_JSON.weather[0].icon + '.png">'
-            + '<span class="temp">' + day_JSON.temp.day + '</span>'
-            + '<span clss="windspeed">' + day_JSON.wind_speed + '</span>'
-            + '<span class="humidity">' + day_JSON.humidity + '</span>';
+            + '<span class="temp">' + day_JSON.temp.day + '°</span>'
+            + '<span class="humidity">' + day_JSON.humidity + '%</span>'
+            + '<span clss="windspeed">' + day_JSON.wind_speed + ' mph</span>';
         
         days_Section.appendChild(div);
         }
