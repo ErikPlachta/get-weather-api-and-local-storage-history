@@ -164,6 +164,7 @@ const _get_City = async (cityName) => {
         const json = await res.json();
         console.log("Got results: ",json);
         _build_Current(json)
+        _get_Forecast_LatLon(json.coord.lon,json.coord.lat)
       })();
       return response;
 };
