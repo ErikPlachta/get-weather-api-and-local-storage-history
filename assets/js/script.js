@@ -83,8 +83,7 @@ const _get_Forecast_City = async (cityName) => {
         // https://openweathermap.org/api/one-call-api
         const res = await fetch('http://api.openweathermap.org/data/2.5/onecall?lat=35.2271&lon=-80.8431'
             +'&exclude=hourly,minutely'
-            +'&appid=' +apiKey
-            +'&cnt=5',
+            +'&appid=' +apiKey,
             { method: 'GET'}
         );
         const json = await res.json();
@@ -118,7 +117,10 @@ function _set_Results(response){
     
     const days = response.daily;
 
+    let numberDays = 1;
     for (day in days){
+
+        if (numberDays < 6){
         
         let day_JSON = days[day];
         
@@ -133,7 +135,13 @@ function _set_Results(response){
 
 
 
-        var dayname = new Date(day_JSON.dt * 1000).toLocaleDateString('en-us', { weekday: 'long', day: 'numeric' });
+        var dayname = new Date(day_JSON.dt * 1000).toLocaleDateString(
+                                                        'en-us',
+                                                        { 
+                                                            weekday: 'long', 
+                                                            day: 'numeric' 
+                                                        }
+                                                    );
 
         //-- build day
         div.innerHTML = 
@@ -144,6 +152,8 @@ function _set_Results(response){
             + '<span class="humidity">' + day_JSON.humidity + '</span>';
         
         days_Section.appendChild(div);
+        }
+        numberDays ++;
         
         
     }
