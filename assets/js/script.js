@@ -39,22 +39,13 @@ const datetime_12 = function() { return moment().format("YYYYMMDD hh:mm:ss:ms a"
 //-- event specific globals
 var user_FirstLogin = false;
 
-//-- If user allows geo-tracking, records their location for searching
-var current_Location = null;
-
-
-
 
 // https://home.openweathermap.org/api_keys
 const apiKey ="d5291050dfed6abda18c09f0e663326d";
 
 
 /*----------------------------------------------------------------------------*/
-//-- FORECAST
-
-
-
-    
+//-- FORECAST    
     
 //-- Access the open weather map API by city name        
 const _get_Forecast_LatLon = async (lat,lon) => {
@@ -129,7 +120,9 @@ function _build_Forecast(response){
             div.innerHTML = 
                 
                 '<h4 class="date">' + weekday + '</h4>'
-                +'<img class="weathericon" src="http://openweathermap.org/img/w/' + day_JSON.weather[0].icon + '.png">'
+                +'<img class="weathericon" src="http://openweathermap.org/img/w/'
+                    + day_JSON.weather[0].icon 
+                    + '.png">'
                 + '<span class="temp">' + day_JSON.temp.day + '°</span>'
                 + '<span class="humidity">' + day_JSON.humidity + '%</span>'
                 + '<span clss="windspeed">' + day_JSON.wind_speed + ' mph</span>';
@@ -552,10 +545,24 @@ function _set_DemoData(){
 
 //-- TESTING --> END
 /*----------------------------------------------------------------------------*/
-//-- START --> GET GEO LOCATION / CITY
+//-- START --> SEARCH
+
+$("#cityName_Search_Input").trigger('focus');
+
+$( "#cityname_Search_Btn").click(function(){
+    
+    let search = document.getElementById("cityName_Search_Input").value;
+    
+    if(search != ''){
+        console.log(search)
+    }
+    else {
+        console.log("search == null")
+    }
+});
 
 
-//-- END --> GET GEO LOCATION / CITY
+//-- END --> SEARCH
 /*----------------------------------------------------------------------------*/
 //-- RUNNING --> START
 
