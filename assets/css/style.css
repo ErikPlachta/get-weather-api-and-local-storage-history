@@ -54,6 +54,7 @@ body {
     box-sizing: border-box; /* prevent padding overflow */
     background-color: var(--color_Primary);
     font-family: Roboto, 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
+    
 }
 
 button {
@@ -130,35 +131,50 @@ nav span {
   padding: 3rem;
 }
 
-.forecast {
-  border-radius: 2rem;
-  padding: 2rem;
+
+
+section.forecast {
+  
+  margin: auto;
+  width: 90%;
+  border-radius: .5rem;
+  /* padding: 2rem; */
+  
+  
+  
   background-color: var(--bg_Body);
-  display: flex;
+  display: none;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
+  align-content: flex-start;
+  flex-grow: 2;
+  
+  -webkit-transition: background .2s ease-in-out;
+  transition: background .2s ease-in-out;
 }
 
 /* Container holding the city  */
 section#city {
   flex: 1; 
+  
 }
 
 /* Container holding the city  */
 div.city {
-  
-  
+  /* width: 5rem; */
+  /* flex: 1; */
   /* box-shadow: var(--boxShadow_Inset_bottom); */
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
   text-align: center;
-  padding-bottom: 1rem;
-  /* margin-right: 10rem; */
+  margin: 1rem;
+  
   align-items: center;
   font-size: 1.25rem;
+  
 }
 
 
@@ -177,23 +193,23 @@ div.city {
   /* flex: 1;   */
   display: flex;
   flex-wrap: wrap;
-  /* flex-direction: row; */
-  /* justify-content: space-between; */
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 /* Container holding each unique day */
 div.day {
+  
   /* Styling inside of each day to make sure content look good */
   display: flex;
   flex-flow: wrap;
   flex-direction: column;
   justify-content: space-around;
   /* border: 1px solid red; */
-  width: 100px;
   align-items: center;
-  box-shadow: var(--boxShadow_Inset_bottom);
+  margin: 0 .1rem;
   padding: 1rem 0;
-  /* border: var(--border_shadow_1px_1a) */
+  
 }
 
 .day span {

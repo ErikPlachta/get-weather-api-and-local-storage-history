@@ -547,14 +547,20 @@ function _set_DemoData(){
 /*----------------------------------------------------------------------------*/
 //-- START --> SEARCH
 
+
 $("#cityName_Search_Input").trigger('focus');
 
 $( "#cityname_Search_Btn").click(function(){
     
-    let search = document.getElementById("cityName_Search_Input").value;
+    let cityname_Searched = document.getElementById("cityName_Search_Input").value;
     
-    if(search != ''){
-        console.log(search)
+    if(cityname_Searched != ''){
+        console.log(cityname_Searched)
+        document.getElementById("city").innerHTML = "";
+        document.getElementById("days").innerHTML = "";
+        document.getElementById("forecast_Section").style.display = "flex";
+        
+        _get_City(cityname_Searched);
     }
     else {
         console.log("search == null")
@@ -570,36 +576,15 @@ $( "#cityname_Search_Btn").click(function(){
 function run(){
     
     //-- TESTING
-    let testing = true;
+    let testing = false;
     
-    if (testing == false){
+    if (testing != true){
         /* 1. Load the database */
         _load_Database();
 
-        /* 2. Get GEO Location */
-        
-
-        /* 3. Update Page Setings */
-
-        /* 4. Load APIs */
-
-        /* 5. Build Page */
     }
     else {
-        console.log("//-- RUNNING TEST")
-        
-        // _set_DemoData();
-        
-        let cityName = 'Charlotte';
-        
-        const response = _get_City(cityName);
-
-        // _get_Forecast_LatLon(lat,lon);
-
-        //wait 2 seconds then push results to dict
-        // setTimeout(() => {  _set_Results(response); }, 2000);
-
-        
+        console.log("//-- RUNNING TEST")    
     }
 };
 
