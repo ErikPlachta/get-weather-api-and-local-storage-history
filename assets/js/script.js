@@ -52,8 +52,7 @@ const _get_Forecast_LatLon = async (lat,lon) => {
     
     // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
     const response = (async () => {
-        // let cityName = 'Charlotte';
-        // const res = await fetch('http://api.openweathermap.org/data/2.5/forecast?q='+ cityName +'&appid=' +apiKey +'&cnt=5',{ method: 'GET'});
+        
         // https://openweathermap.org/api/one-call-api
         const res = await fetch('http://api.openweathermap.org/data/2.5/onecall?lat=35.2271&lon=-80.8431'
             +'&exclude=hourly,minutely,current'
@@ -155,7 +154,7 @@ const _get_City = async (cityName) => {
     
     // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
     const response = (async () => {
-        let cityName = 'Charlotte';
+        
         // const res = await fetch('http://api.openweathermap.org/data/2.5/forecast?q='
         
         const res = await fetch('http://api.openweathermap.org/data/2.5/weather?q='
@@ -552,16 +551,24 @@ $("#cityName_Search_Input").trigger('focus');
 
 $( "#cityname_Search_Btn").click(function(){
     
+    // claer out containers holding current weather
+    document.getElementById("city").innerHTML = "";
+    document.getElementById("days").innerHTML = "";
+
+    // get EU saerch value
     let cityname_Searched = document.getElementById("cityName_Search_Input").value;
     
+    // if Eu typed anything
     if(cityname_Searched != ''){
-        console.log(cityname_Searched)
-        document.getElementById("city").innerHTML = "";
-        document.getElementById("days").innerHTML = "";
+        
+        // console.log(cityname_Searched)
+        
         document.getElementById("forecast_Section").style.display = "flex";
         
         _get_City(cityname_Searched);
     }
+
+    //-- If didn't type anything
     else {
         console.log("search == null")
     }

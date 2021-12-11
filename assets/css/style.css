@@ -146,9 +146,7 @@ section.forecast {
   display: none;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
-  align-content: flex-start;
-  flex-grow: 2;
+  justify-content: space-evenly;
   
   -webkit-transition: background .2s ease-in-out;
   transition: background .2s ease-in-out;
@@ -156,7 +154,7 @@ section.forecast {
 
 /* Container holding the city  */
 section#city {
-  flex: 1; 
+  border: 1px solid red;
   
 }
 
@@ -165,6 +163,7 @@ div.city {
   /* width: 5rem; */
   /* flex: 1; */
   /* box-shadow: var(--boxShadow_Inset_bottom); */
+  
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -195,6 +194,7 @@ div.city {
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-between;
+  border: 1px solid red;
 }
 
 /* Container holding each unique day */
@@ -204,16 +204,20 @@ div.day {
   display: flex;
   flex-flow: wrap;
   flex-direction: column;
-  justify-content: space-around;
-  /* border: 1px solid red; */
+  justify-content: space-between;
+  border: 1px solid red;
   align-items: center;
   margin: 0 .1rem;
-  padding: 1rem 0;
+  padding: 1rem;
+  /* font-size: .75rem; */
   
 }
 
 .day span {
   padding: 0;
+  border: 1px solid blue;
+  width: 100%;
+  text-align: center;
 }
 
 .day .date {
