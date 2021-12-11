@@ -119,25 +119,36 @@ nav span {
 /* -------------------------------------------------------------------------- */
 /* START --> FORECAST */
 
-.response,
+.search{
+  margin-bottom: 10rem;
+  
+}
+
 .forecast {
+
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
+/* Container holding the city  */
+section#city {
+  flex: 1;
+}
 
-.city {
-  width: 100%;
-  /* box-shadow: var(--boxShadow_Inset_bottom); */
+/* Container holding the city  */
+div.city {
+  
+  
+  box-shadow: var(--boxShadow_Inset_bottom);
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   text-align: center;
   padding-bottom: 1rem;
-  margin-right: 5rem;
+  /* margin-right: 10rem; */
   align-items: center;
   font-size: 1.25rem;
 }
@@ -153,14 +164,18 @@ nav span {
   max-width: 50px;
 }
 
+/* Container holding the days */
 #days{
+  /* flex: 1;   */
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-between;
+  /* flex-direction: row; */
+  /* justify-content: space-between; */
 }
 
-.day {
+/* Container holding each unique day */
+div.day {
+  /* Styling inside of each day to make sure content look good */
   display: flex;
   flex-flow: wrap;
   flex-direction: column;
@@ -170,19 +185,19 @@ nav span {
   align-items: center;
   box-shadow: var(--boxShadow_Inset_bottom);
   padding: 1rem 0;
-  border: var(--border_shadow_1px_1a)
+  /* border: var(--border_shadow_1px_1a) */
 }
 
 .day span {
   padding: 0;
 }
-/* .day_Header, */
-.day_Details{
-  display:flex;
-  flex-direction: row;
-  justify-content: space-around;
-  flex-flow: wrap;
+
+.day .date {
+  border-bottom: var(--border_shadow_1px_25a);
+  width: 100%;
+  text-align: center;
 }
+
 
 
 

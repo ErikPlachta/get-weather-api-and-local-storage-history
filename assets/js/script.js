@@ -39,6 +39,9 @@ const datetime_12 = function() { return moment().format("YYYYMMDD hh:mm:ss:ms a"
 //-- event specific globals
 var user_FirstLogin = false;
 
+//-- If user allows geo-tracking, records their location for searching
+var current_Location = null;
+
 
 
 
@@ -113,7 +116,7 @@ function _build_Forecast(response){
             div.setAttribute("class","day");
 
             //-- convert date time unicode to str
-            var date_day = new Date(day_JSON.dt * 1000)
+            var weekday = new Date(day_JSON.dt * 1000)
                 .toLocaleDateString(
                     'en-us',
                     { 
@@ -125,7 +128,7 @@ function _build_Forecast(response){
             //-- build the day
             div.innerHTML = 
                 
-                '<span class="date">' + date_day + '</span>'
+                '<h4 class="date">' + weekday + '</h4>'
                 +'<img class="weathericon" src="http://openweathermap.org/img/w/' + day_JSON.weather[0].icon + '.png">'
                 + '<span class="temp">' + day_JSON.temp.day + '°</span>'
                 + '<span class="humidity">' + day_JSON.humidity + '%</span>'
@@ -549,6 +552,11 @@ function _set_DemoData(){
 
 //-- TESTING --> END
 /*----------------------------------------------------------------------------*/
+//-- START --> GET GEO LOCATION / CITY
+
+
+//-- END --> GET GEO LOCATION / CITY
+/*----------------------------------------------------------------------------*/
 //-- RUNNING --> START
 
 
@@ -561,11 +569,14 @@ function run(){
         /* 1. Load the database */
         _load_Database();
 
-        /* 2. Update Page Setings */
+        /* 2. Get GEO Location */
+        
 
-        /* 3. Load APIs */
+        /* 3. Update Page Setings */
 
-        /* 4. Build Page */
+        /* 4. Load APIs */
+
+        /* 5. Build Page */
     }
     else {
         console.log("//-- RUNNING TEST")
@@ -595,3 +606,4 @@ run();
 
 //-- RUNNING --> END
 /*----------------------------------------------------------------------------*/
+
