@@ -50,10 +50,18 @@
   }
   
 
+  
 body {
     box-sizing: border-box; /* prevent padding overflow */
-    background-color: var(--bg_Body);
-    font-family: Roboto, 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: var(--color_Primary);
+    
+    /* Priamry Font  */
+    font-family: 'Roboto', sans-serif;
+    /* Secondary Font */
+    font-family: 'Open Sans';
+    /* Inline Code */
+    /* font-family: 'Roboto Mono', monospace; */
+    
 }
 
 button {
@@ -67,8 +75,10 @@ h1,h2,h3,h4,h5{
 }
 
 h1{
-  font-weight: 400;
+  font-family: 'Roboto';
+  font-weight: 300;
 }
+
 h2 {
   font-weight: 400;
 }
@@ -79,6 +89,33 @@ a {
 
 .container {
   margin: 1rem;
+}
+
+
+/* Google Fonts Icons */
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
 }
 
 /* ALL ELEMENTS --> END */
@@ -115,31 +152,72 @@ nav span {
   text-align: bottom;
 }
 
+
+
+/* SECTION Container holding saerch input, icon and button */
+.search{
+  /* margin-bottom: 10rem;   */
+  /* width: 100%; */
+  flex: 1;
+  
+}
+
+input#cityName_Search_Input{
+  height: 3rem;
+  width: 50%;
+}
+input#cityname_Search_Btn{
+  background-color: var(--bg_Body);
+  height: 3rem;
+  border-radius: .25rem;
+}
+
 /* END --> HEADER & NAV */
 /* -------------------------------------------------------------------------- */
 /* START --> FORECAST */
 
-.response,
-.forecast {
-  display: flex;
+
+section.forecast {
+  
+  margin: auto;
+  width: 90%;
+  border-radius: .5rem;
+  /* padding: 2rem; */
+  
+  
+  
+  background-color: var(--bg_Body);
+  display: none;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  
+  -webkit-transition: background .2s ease-in-out;
+  transition: background .2s ease-in-out;
 }
 
+/* Container holding the city  */
+#city {
+  border: 1px solid red;
+  
+}
 
-.city {
-  width: 100%;
+/* Container holding the city  */
+div.city {
+  /* width: 5rem; */
+  /* flex: 1; */
   /* box-shadow: var(--boxShadow_Inset_bottom); */
+  
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   text-align: center;
-  padding-bottom: 1rem;
-  margin-right: 5rem;
+  margin: 1rem;
+  
   align-items: center;
   font-size: 1.25rem;
+  
 }
 
 
@@ -153,36 +231,46 @@ nav span {
   max-width: 50px;
 }
 
+/* Container holding the days */
 #days{
+  /* flex: 1;   */
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-between;
+  border: 1px solid red;
 }
 
+/* DIV Container holding each unique day */
 .day {
+  
+  /* Styling inside of each day to make sure content look good */
   display: flex;
   flex-flow: wrap;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   /* border: 1px solid red; */
-  width: 100px;
+  
   align-items: center;
-  box-shadow: var(--boxShadow_Inset_bottom);
-  padding: 1rem 0;
-  border: var(--border_shadow_1px_1a)
+  margin: 0 .1rem;
+  padding: 1rem;
+  /* font-size: .75rem; */
+  
 }
 
 .day span {
   padding: 0;
+  /* border: 1px solid blue; */
+  width: 100%;
+  text-align: center;
 }
-/* .day_Header, */
-.day_Details{
-  display:flex;
-  flex-direction: row;
-  justify-content: space-around;
-  flex-flow: wrap;
+
+.day .date {
+  border-bottom: var(--border_shadow_1px_25a);
+  width: 100%;
+  text-align: center;
 }
+
 
 
 
@@ -197,7 +285,30 @@ nav span {
 
 
 @media screen and (max-width: 450px) {
+  #city{
+    width: 100%;
+  }
 
+  #days{
+    padding: auto;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .day {
+    /* border: 1px solid rgba(0,0,0,.1); */
+  }
+  
+  .day h4{
+    
+    
+  }
+  
+  .day span {
+    width: 100%;
+    border-bottom: var(--border_shadow_1px_1a);
+  }
 }
 
 /* MEDIA SPECIFIC --> END  */

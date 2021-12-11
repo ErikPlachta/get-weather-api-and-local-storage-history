@@ -8,19 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     
-    <!-- FontAwesome Icons-->
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-      crossorigin="anonymous"
-    />
-    <!-- IMPORT FONT -->
-    <!-- TODO:: Define Font -->
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Google Fonts Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+        
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+
+
+
+    
     <!-- Custom Stylesheets and Script -->
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
@@ -33,30 +33,44 @@
     <!------------------------------------------------------------------------->
     <!-- HEADER -> START -->
     <header>
+
+      <!-- App Name & Tagline -->
       <span id='appBranding'>
         <span class="appName"></span> <!-- Icon to go here -->
-        <h1>Weather App</h1>
-        <p id="appTagline">A tagline here</p>
+        <h1>
+          <span class="material-icons globe">travel_explore</span>
+          Weather App
+        </h1>
+        <p id="appTagline">Search by City to get the current and 5-day Forecast</p>
       </span>
-      <nav>
-        <span>New Search</span>
-        <span>Search History</span>
-        <span>Settings</span>
-        <span>About</span>
-      </nav>
+      
+      <!-- Search Box -->
+      <section class='container search'>
+        
+          <input type="text" id="cityName_Search_Input" placeholder="Search for a City to get a forecast" aria-label="City Name" aria-describedby="cityName">
+          <input id="cityname_Search_Btn" type="submit" value="Get Forecast">
+        
+      </section>
+      <!-- Remaining -->
+      <section> 
+        <!-- TODO:: 12/11/2021 #EP || Create and link to modal -->
+        <span>Search History</span> 
+      </section>
+      
     </header>
     <!-- HEADER -> END -->
     <!------------------------------------------------------------------------->
     
-    <section class='container response forecast'>
+    
+    <section class='container forecast' id='forecast_Section'>
       <!-- Complete Payload Response from API -->
 
-      <!-- Weather Forecast -->
       
-        
-        <section id="city"></section>
-        
-        <section id="days"></section>
+      <!-- City Current -->
+      <article id="city"></article>
+      
+      <!-- Dailys -->
+      <article id="days"></article>
       
       
       
@@ -78,6 +92,7 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer">
     </script>
+
     
     <!-- CUSTOM JS -->
     <script src='./assets/js/script.js'></script>

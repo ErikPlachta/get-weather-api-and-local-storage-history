@@ -40,26 +40,19 @@ const datetime_12 = function() { return moment().format("YYYYMMDD hh:mm:ss:ms a"
 var user_FirstLogin = false;
 
 
-
-
 // https://home.openweathermap.org/api_keys
 const apiKey ="d5291050dfed6abda18c09f0e663326d";
 
 
 /*----------------------------------------------------------------------------*/
-//-- FORECAST
-
-
-
-    
+//-- FORECAST    
     
 //-- Access the open weather map API by city name        
 const _get_Forecast_LatLon = async (lat,lon) => {
     
     // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
     const response = (async () => {
-        // let cityName = 'Charlotte';
-        // const res = await fetch('http://api.openweathermap.org/data/2.5/forecast?q='+ cityName +'&appid=' +apiKey +'&cnt=5',{ method: 'GET'});
+        
         // https://openweathermap.org/api/one-call-api
         const res = await fetch('http://api.openweathermap.org/data/2.5/onecall?lat=35.2271&lon=-80.8431'
             +'&exclude=hourly,minutely,current'
@@ -113,7 +106,7 @@ function _build_Forecast(response){
             div.setAttribute("class","day");
 
             //-- convert date time unicode to str
-            var date_day = new Date(day_JSON.dt * 1000)
+            var weekday = new Date(day_JSON.dt * 1000)
                 .toLocaleDateString(
                     'en-us',
                     { 
@@ -125,8 +118,10 @@ function _build_Forecast(response){
             //-- build the day
             div.innerHTML = 
                 
-                '<span class="date">' + date_day + '</span>'
-                +'<img class="weathericon" src="http://openweathermap.org/img/w/' + day_JSON.weather[0].icon + '.png">'
+                '<h4 class="date">' + weekday + '</h4>'
+                +'<img class="weathericon" src="http://openweathermap.org/img/w/'
+                    + day_JSON.weather[0].icon 
+                    + '.png">'
                 + '<span class="temp">' + day_JSON.temp.day + '°</span>'
                 + '<span class="humidity">' + day_JSON.humidity + '%</span>'
                 + '<span clss="windspeed">' + day_JSON.wind_speed + ' mph</span>';
@@ -159,7 +154,7 @@ const _get_City = async (cityName) => {
     
     // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
     const response = (async () => {
-        let cityName = 'Charlotte';
+        
         // const res = await fetch('http://api.openweathermap.org/data/2.5/forecast?q='
         
         const res = await fetch('http://api.openweathermap.org/data/2.5/weather?q='
@@ -549,39 +544,55 @@ function _set_DemoData(){
 
 //-- TESTING --> END
 /*----------------------------------------------------------------------------*/
+//-- START --> SEARCH
+
+//-- Browser focus to typing
+$("#cityName_Search_Input").trigger('focus');
+
+//-- When 
+$( "#cityname_Search_Btn").click(function(){
+    
+    // claer out containers holding current weather
+    document.getElementById("city").innerHTML = "";
+    document.getElementById("days").innerHTML = "";
+
+    // get EU saerch value
+    let cityname_Searched = document.getElementById("cityName_Search_Input").value;
+    
+    // if Eu typed anything
+    if(cityname_Searched != ''){
+        
+        // console.log(cityname_Searched)
+        
+        document.getElementById("forecast_Section").style.display = "flex";
+        
+        _get_City(cityname_Searched);
+    }
+
+    //-- If didn't type anything
+    else {
+        console.log("search == null")
+    }
+});
+
+
+//-- END --> SEARCH
+/*----------------------------------------------------------------------------*/
 //-- RUNNING --> START
 
 
 function run(){
     
     //-- TESTING
-    let testing = true;
+    let testing = false;
     
-    if (testing == false){
+    if (testing != true){
         /* 1. Load the database */
         _load_Database();
 
-        /* 2. Update Page Setings */
-
-        /* 3. Load APIs */
-
-        /* 4. Build Page */
     }
     else {
-        console.log("//-- RUNNING TEST")
-        
-        // _set_DemoData();
-        
-        let cityName = 'Charlotte';
-        
-        const response = _get_City(cityName);
-
-        // _get_Forecast_LatLon(lat,lon);
-
-        //wait 2 seconds then push results to dict
-        // setTimeout(() => {  _set_Results(response); }, 2000);
-
-        
+        console.log("//-- RUNNING TEST")    
     }
 };
 
@@ -595,3 +606,4 @@ run();
 
 //-- RUNNING --> END
 /*----------------------------------------------------------------------------*/
+
