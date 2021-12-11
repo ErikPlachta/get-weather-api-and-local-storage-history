@@ -546,9 +546,10 @@ function _set_DemoData(){
 /*----------------------------------------------------------------------------*/
 //-- START --> SEARCH
 
-
+//-- Browser focus to typing
 $("#cityName_Search_Input").trigger('focus');
 
+//-- When 
 $( "#cityname_Search_Btn").click(function(){
     
     // claer out containers holding current weather

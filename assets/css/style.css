@@ -50,10 +50,17 @@
   }
   
 
+  
 body {
     box-sizing: border-box; /* prevent padding overflow */
     background-color: var(--color_Primary);
-    font-family: Roboto, 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
+    
+    /* Priamry Font  */
+    font-family: 'Roboto', sans-serif;
+    /* Secondary Font */
+    font-family: 'Open Sans';
+    /* Inline Code */
+    /* font-family: 'Roboto Mono', monospace; */
     
 }
 
@@ -68,8 +75,10 @@ h1,h2,h3,h4,h5{
 }
 
 h1{
-  font-weight: 400;
+  font-family: 'Roboto';
+  font-weight: 300;
 }
+
 h2 {
   font-weight: 400;
 }
@@ -80,6 +89,33 @@ a {
 
 .container {
   margin: 1rem;
+}
+
+
+/* Google Fonts Icons */
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
 }
 
 /* ALL ELEMENTS --> END */
@@ -116,21 +152,29 @@ nav span {
   text-align: bottom;
 }
 
+
+
+/* SECTION Container holding saerch input, icon and button */
+.search{
+  /* margin-bottom: 10rem;   */
+  /* width: 100%; */
+  flex: 1;
+  
+}
+
+input#cityName_Search_Input{
+  height: 3rem;
+  width: 50%;
+}
+input#cityname_Search_Btn{
+  background-color: var(--bg_Body);
+  height: 3rem;
+  border-radius: .25rem;
+}
+
 /* END --> HEADER & NAV */
 /* -------------------------------------------------------------------------- */
 /* START --> FORECAST */
-
-.search{
-  /* margin-bottom: 10rem;   */
-  width: 100%;
-}
-
-
-#cityname_Search_Div {
-  
-  padding: 3rem;
-}
-
 
 
 section.forecast {
@@ -153,7 +197,7 @@ section.forecast {
 }
 
 /* Container holding the city  */
-section#city {
+#city {
   border: 1px solid red;
   
 }
@@ -197,15 +241,16 @@ div.city {
   border: 1px solid red;
 }
 
-/* Container holding each unique day */
-div.day {
+/* DIV Container holding each unique day */
+.day {
   
   /* Styling inside of each day to make sure content look good */
   display: flex;
   flex-flow: wrap;
   flex-direction: column;
   justify-content: space-between;
-  border: 1px solid red;
+  /* border: 1px solid red; */
+  
   align-items: center;
   margin: 0 .1rem;
   padding: 1rem;
@@ -215,7 +260,7 @@ div.day {
 
 .day span {
   padding: 0;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   width: 100%;
   text-align: center;
 }
@@ -240,7 +285,30 @@ div.day {
 
 
 @media screen and (max-width: 450px) {
+  #city{
+    width: 100%;
+  }
 
+  #days{
+    padding: auto;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .day {
+    /* border: 1px solid rgba(0,0,0,.1); */
+  }
+  
+  .day h4{
+    
+    
+  }
+  
+  .day span {
+    width: 100%;
+    border-bottom: var(--border_shadow_1px_1a);
+  }
 }
 
 /* MEDIA SPECIFIC --> END  */
