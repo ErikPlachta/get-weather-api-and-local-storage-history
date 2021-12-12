@@ -213,11 +213,10 @@ const _get_Forecast_City = async (cityName) => {
             //-- Update Banner with Error message
             document.getElementById("banner").innerHTML = "<B>ERROR</B>: " + json.message + " : <code>" +cityName +"</code>";
             
+            //-- Banner Error Alert. Starts Fade in 1s
             document.getElementById("banner").style.opacity = "1";
-           
             setTimeout(function() {
                 // document.getElementById("banner").style.display = "none";
-                
                 fade(document.getElementById("banner"));
             }, 1000);
             
@@ -227,7 +226,7 @@ const _get_Forecast_City = async (cityName) => {
 };
 
 function fade(element) {
-    
+    document.getElementById("banner").style.opacity = "1";
     //-- Get elements current opacity
     var op = element.style.opacity;  // initial opacity
     
@@ -242,7 +241,7 @@ function fade(element) {
         
         //-- Once to 0.1, stop interval and set opacity to zero
         if (op <= 0.1){
-            clearInterval(timer);    
+            clearInterval(timer);
             element.style.opacity = '0';
         }
         //-- Reduce opacity by 0.1
