@@ -45,6 +45,38 @@ const apiKey ="d5291050dfed6abda18c09f0e663326d";
 
 
 /*----------------------------------------------------------------------------*/
+//-- START --> SEARCH
+
+//-- Browser focus to typing
+$("#cityName_Search_Input").trigger('focus');
+
+//-- When 
+$( "#cityname_Search_Btn").click(function(){
+    
+    // Clear out containers holding current weather
+    document.getElementById("city").innerHTML = "";
+    document.getElementById("days").innerHTML = "";
+
+    // get EU saerch value
+    let cityname_Searched = document.getElementById("cityName_Search_Input").value;
+    
+    // if EU typed anything
+    if(cityname_Searched != ''){
+        
+        //-- Try to get the forecast
+        _get_Forecast_City(cityname_Searched);
+    }
+
+    //-- If didn't type anything
+    else {
+        console.log("search == null")
+    }
+});
+
+
+//-- END --> SEARCH
+
+/*----------------------------------------------------------------------------*/
 //-- FORECAST    
     
 //-- Access the open weather map API by city name        
@@ -150,7 +182,7 @@ function _build_Forecast(response){
 /*----------------------------------------------------------------------------*/
 //-- CITY
 
-const _get_City = async (cityName) => {
+const _get_Forecast_City = async (cityName) => {
     
     // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
     const response = (async () => {
@@ -166,8 +198,14 @@ const _get_City = async (cityName) => {
             
         const json = await res.json();
         console.log("Got results: ",json);
-        _build_Current(json)
-        _get_Forecast_LatLon(json.coord.lon,json.coord.lat)
+        
+        if(json.cod == 200){
+            _build_Current(json)
+            _get_Forecast_LatLon(json.coord.lon,json.coord.lat)
+            document.getElementById("forecast_Section").style.display = "flex";
+        } else {
+            console.log(json.message, json.cod)
+        }
       })();
       return response;
 };
@@ -543,40 +581,6 @@ function _set_DemoData(){
 };
 
 //-- TESTING --> END
-/*----------------------------------------------------------------------------*/
-//-- START --> SEARCH
-
-//-- Browser focus to typing
-$("#cityName_Search_Input").trigger('focus');
-
-//-- When 
-$( "#cityname_Search_Btn").click(function(){
-    
-    // claer out containers holding current weather
-    document.getElementById("city").innerHTML = "";
-    document.getElementById("days").innerHTML = "";
-
-    // get EU saerch value
-    let cityname_Searched = document.getElementById("cityName_Search_Input").value;
-    
-    // if Eu typed anything
-    if(cityname_Searched != ''){
-        
-        // console.log(cityname_Searched)
-        
-        document.getElementById("forecast_Section").style.display = "flex";
-        
-        _get_City(cityname_Searched);
-    }
-
-    //-- If didn't type anything
-    else {
-        console.log("search == null")
-    }
-});
-
-
-//-- END --> SEARCH
 /*----------------------------------------------------------------------------*/
 //-- RUNNING --> START
 

@@ -29,7 +29,7 @@
     --boxShadow_bottom_accent_Primary: 0 .01rem .4rem var(--color_Accent); /* offset-x | offset-y | blur-radius | color */
     
     /* BOX SHADOWS - EFFECTS*/
-    --boxShadow_top_hover_black_25a: 0 -.75rem 1rem var(--color_shadow_025_black); /* offset-x | offset-y | blur-radius | color */
+    --boxShadow_top_hover_black_25a: 0 -.25rem 1rem var(--color_shadow_025_black); /* offset-x | offset-y | blur-radius | color */
     --boxShadow_top_hover_black_1a:  0 -.1rem .5rem var(--color_shadow_01_black); /* offset-x | offset-y | blur-radius | color */
     
     
@@ -53,7 +53,8 @@
   
 body {
     box-sizing: border-box; /* prevent padding overflow */
-    background-color: var(--color_Primary);
+    background-color: var(--bg_Body);
+
     
     /* Priamry Font  */
     font-family: 'Roboto', sans-serif;
@@ -77,6 +78,7 @@ h1,h2,h3,h4,h5{
 h1{
   font-family: 'Roboto';
   font-weight: 300;
+  font-size: 2rem;
 }
 
 h2 {
@@ -127,16 +129,19 @@ header {
   -webkit-transition: background .2s ease-in-out;
   transition: background .2s ease-in-out;
   padding: .5rem;
-  background-color: var(--color_Primary);
-  color: white;
+  background-color: var(--bg_Container);
+  color: var(--color_Primary);
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
+  
 }
 
 #appBranding {
   margin: 0 2rem;
+  flex: 2;
+  
 }
 
 nav {
@@ -144,7 +149,8 @@ nav {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: center;
   /* text-align: right; */
 }
 nav span {
@@ -156,21 +162,65 @@ nav span {
 
 /* SECTION Container holding saerch input, icon and button */
 .search{
-  /* margin-bottom: 10rem;   */
-  /* width: 100%; */
-  flex: 1;
+  flex: 3;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
   
 }
 
 input#cityName_Search_Input{
-  height: 3rem;
-  width: 50%;
+  box-shadow: var(--boxShadow_Top);
+  border: none;
+  text-align: center;
+  font-weight: bold;
+  flex: 5;
+  border-radius: .5rem 0 0 .5rem;
+  
 }
+input#cityName_Search_Input:focus {
+  outline: 1px solid var(--border_shadow_1px_25a);
+}
+
+input::placeholder {
+  /* color: var(--color_Primary); */
+}
+
+
+input#cityname_Search_Btn {
+  border-radius: 0 .5rem .5rem 0;
+}
+
+input#search_History_Btn {
+  border-radius: .5rem;
+}
+
+input#search_History_Btn,
 input#cityname_Search_Btn{
-  background-color: var(--bg_Body);
+  background-color: var(--color_Primary);
+  color: var(--bg_Body);
   height: 3rem;
-  border-radius: .25rem;
+  padding: 0 .5rem;
+  float: right;
+  flex: 1;
+  box-shadow: var(--boxShadow_Top);
+  cursor: pointer;
 }
+
+input#search_History_Btn:hover,
+input#cityname_Search_Btn:hover,
+input#cityName_Search_Input:hover {
+  box-shadow: var(--boxShadow_top_hover_black_25a);
+  filter: brightness(110%);
+  text-decoration: none;
+}
+input#search_History_Btn:hover,
+input#cityname_Search_Btn:hover {
+  color: var(--color_Accent);
+  
+}
+
 
 /* END --> HEADER & NAV */
 /* -------------------------------------------------------------------------- */
@@ -178,8 +228,8 @@ input#cityname_Search_Btn{
 
 
 section.forecast {
-  
-  margin: auto;
+  box-shadow: var(--boxShadow_Top);
+  margin: 3rem auto;
   width: 90%;
   border-radius: .5rem;
   /* padding: 2rem; */
