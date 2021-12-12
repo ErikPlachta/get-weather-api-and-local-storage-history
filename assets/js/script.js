@@ -86,7 +86,7 @@ const _get_Forecast_LatLon = async (lat,lon) => {
     const response = (async () => {
         
         // https://openweathermap.org/api/one-call-api
-        const res = await fetch('http://api.openweathermap.org/data/2.5/onecall?lat=35.2271&lon=-80.8431'
+        const res = await fetch('https://api.openweathermap.org/data/2.5/onecall?lat=35.2271&lon=-80.8431'
             +'&exclude=hourly,minutely,current'
             +'&units=imperial'
             +'&appid=' +apiKey,
@@ -151,7 +151,7 @@ function _build_Forecast(response){
             div.innerHTML = 
                 
                 '<h4 class="date">' + weekday + '</h4>'
-                +'<img class="weathericon" src="http://openweathermap.org/img/w/'
+                +'<img class="weathericon" src="https://openweathermap.org/img/w/'
                     + day_JSON.weather[0].icon 
                     + '.png">'
                 + '<span class="temp">' + day_JSON.temp.day + '°</span>'
@@ -189,7 +189,7 @@ const _get_Forecast_City = async (cityName) => {
         
         // const res = await fetch('http://api.openweathermap.org/data/2.5/forecast?q='
         
-        const res = await fetch('http://api.openweathermap.org/data/2.5/weather?q='
+        const res = await fetch('https://api.openweathermap.org/data/2.5/weather?q='
             + cityName
             +'&appid=' +apiKey
             +'&units=imperial',
@@ -246,7 +246,7 @@ function _build_Current(response){
     city_Div.innerHTML = 
         '<h1>'+city_JSON.name+'</h1>'
         +'<h3 class="date">' + city_Day + '</h3>'
-        +'<img class="weathericon" src="http://openweathermap.org/img/w/' + city_JSON.weather[0].icon + '.png">'
+        +'<img class="weathericon" src="https://openweathermap.org/img/w/' + city_JSON.weather[0].icon + '.png">'
         
         + '<span class="temp">' + city_JSON.main.temp + '°</span>'
         + '<span class="humidity">' + city_JSON.main.humidity + '%</span>'
