@@ -56,44 +56,49 @@
     </header>
     <!-- HEADER -> END -->
     <!------------------------------------------------------------------------->
-
     <!-- Holds any message events to user -->
     <section class='container banner' id='banner'></section>
+
+    <!-- Parent container holds Forecast & Search History -->
+    <section class='container' id='parent'>
+      
+      <!-- Holds most recently requested forecast -->
+      <section class='container forecast' id='forecast_Section'>
+        
+        <!-- City Current -->
+        <article id="city"></article>
+        
+        <!-- Dailys -->
+        <article id="days"></article>      
+        
+      </section>
+
+      <!-- Search History Log -->
+      <section class="container" id='section_SearchHistory'>
+        <h3>Search History</h3>
+        <input id="clear_SearchHistory_Btn" type="submit" value="Clear History">
+        
+      </section>
+
+      <!------------------------------------------------------------------------->
+      <!-- FOOTER -> START-->
+      <footer></footer>
+      <!-- FOOTER -> END-->
+      <!------------------------------------------------------------------------->
+      <!-- SCRIPT -> START-->
+
+      
+      <!-- jQUERY -->
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <!-- Moment.js -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+              integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+              crossorigin="anonymous"
+              referrerpolicy="no-referrer">
+      </script>
     
-    <!-- Holds most recently requested forecast -->
-    <section class='container forecast' id='forecast_Section'>
-      
-      <!-- City Current -->
-      <article id="city"></article>
-      
-      <!-- Dailys -->
-      <article id="days"></article>      
-      
-    </section>
-
-    <!-- Search History Log -->
-    <section class="container" id='section_SearchHistory'>
-      <h3>Search History</h3>
-      <input id="clear_SearchHistory_Btn" type="submit" value="Clear History">
-      
-    </section>
-
-    <!------------------------------------------------------------------------->
-    <!-- FOOTER -> START-->
-    <footer></footer>
-    <!-- FOOTER -> END-->
-    <!------------------------------------------------------------------------->
-    <!-- SCRIPT -> START-->
-
     
-    <!-- jQUERY -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <!-- Moment.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
-            integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer">
-    </script>
+    </section>
 
     
     <!-- CUSTOM JS -->

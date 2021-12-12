@@ -166,8 +166,10 @@ input#cityName_Search_Input{
   border: 1px solid var(--border_shadow_1px_25a);
   text-align: center;
   font-weight: bold;
-  flex: 5;
+  flex: 5; /* makes sure search is always bigger */
   border-radius: .5rem 0 0 .5rem;
+  min-width: 222;
+  min-height: 48;
 }
 
 /*-- Add inline coloring for focus awareness */
@@ -190,7 +192,7 @@ input#cityname_Search_Btn {
   width: 25%;
   height: 10rem;
   float: right;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -239,7 +241,9 @@ input#cityname_Search_Btn:hover {
 
 /* END --> HEADER & INPUTS */
 /* -------------------------------------------------------------------------- */
-/* START --> FORECAST */
+/* START --> BANNER */
+
+
 
 section.banner{
   opacity: 0;
@@ -265,25 +269,36 @@ section.banner{
   transition: visibility 0s linear 3000ms, opacity 3000ms;
 }
 
-section.forecast {
+/* END --> BANNER */
+/* -------------------------------------------------------------------------- */
+/* START --> FORECAST */
+
+#parent {
   box-shadow: var(--boxShadow_Top);
   margin: 3rem auto;
-  width:70%;
-  border-radius: .5rem;
-  
-  background-color: var(--bg_Body);
-  display: none;
+  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  
+}
+
+section.forecast {
+  margin: auto;
+  width:70%;
+  border-radius: .5rem;
+  /* flex: 2; */
+  background-color: var(--bg_Body);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
   -webkit-transition: background .2s ease-in-out;
   transition: background .2s ease-in-out;
 }
 
 /* Container holding the city  */
 #city {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   
 }
 
@@ -365,32 +380,47 @@ div.city {
 /* -------------------------------------------------------------------------- */
 /* MEDIA SPECIFIC --> START  */
 
-
-@media screen and (max-width: 450px) {
-  #city{
-    width: 100%;
-  }
-
-  #days{
-    padding: auto;
+@media screen and (max-width: 965px) {
+  
+  /* history goes below current forecast */
+  #parent {
     flex-direction: column;
-    width: 100%;
-    overflow: hidden;
   }
 
-  .day {
-    /* border: 1px solid rgba(0,0,0,.1); */
-  }
-  
-  .day h4{
+
+  /*-- Forecast fit screen and keeps on oneline */
+  #forecast_Section{
+    width: 90%;
+    margin: auto;
+    justify-content: space-between;
     
+  }
+
+  /*-- Search fit screen and add styling to division more claer */
+  #section_SearchHistory{
+    width: 90%;
+    margin: auto;
+    box-shadow: var(--boxShadow_inset_Top);
+  }
+}
+
+@media screen and (max-width: 750px) {
+
+  
+  /*-- Forecast fit screen and keeps on oneline */
+  #forecast_Section{
+    width: 90%;
+    margin: auto;
+    justify-content: space-between;
     
   }
+}
+
+
+@media screen and (max-width: 650) {
   
-  .day span {
-    width: 100%;
-    border-bottom: var(--border_shadow_1px_1a);
-  }
+  /*-- Title and Search to get forecast */
+  /* TODO:: 12/12/2021 #EP || To make search button fit smaller screen better automatically */
 }
 
 /* MEDIA SPECIFIC --> END  */

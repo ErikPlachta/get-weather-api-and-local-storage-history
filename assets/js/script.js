@@ -208,7 +208,7 @@ const _get_Forecast_City = async (cityName) => {
         } else {
             
             //-- Hide forecase section if was display visible
-            document.getElementById("forecast_Section").style.display = "none";
+            // document.getElementById("forecast_Section").innerHTML = "Test";
            
             //-- Update Banner with Error message
             document.getElementById("banner").innerHTML = "<B>ERROR</B>: " + json.message + " : <code>" +cityName +"</code>";
@@ -649,9 +649,13 @@ run();
 
 //-- RUNNING --> END
 /*----------------------------------------------------------------------------*/
+//-- ANIMATIONS --> START
 
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(function() {
       document.getElementById('header').className = 'slideDown';
     }, 100);
 }, false);
+
+//-- ANIMATIONS --> END
+/*----------------------------------------------------------------------------*/
