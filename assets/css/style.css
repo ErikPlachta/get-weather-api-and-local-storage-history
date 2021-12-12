@@ -215,7 +215,7 @@ input#cityname_Search_Btn:hover {
 /* START --> FORECAST */
 
 section.banner{
-  display: none;
+  opacity: 0;
   box-shadow: var(--boxShadow_Top);
   color: red;
   /* background-color: var(--color_Primary); */

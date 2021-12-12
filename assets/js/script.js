@@ -202,14 +202,23 @@ const _get_Forecast_City = async (cityName) => {
         if(json.cod == 200){
             _build_Current(json)
             _get_Forecast_LatLon(json.coord.lon,json.coord.lat)
+            
+            //-- Hide forecase section if was display hidden
             document.getElementById("forecast_Section").style.display = "flex";
         } else {
+            
+            //-- Hide forecase section if was display visible
             document.getElementById("forecast_Section").style.display = "none";
-            console.log(json.message, json.cod)
-            document.getElementById("banner").innerText = "ERROR: " + json.message + " : " +cityName;
-            document.getElementById("banner").style.display = "block";
+           
+            //-- Update Banner with Error message
+            document.getElementById("banner").innerHTML = "<B>ERROR</B>: " + json.message + " : <code>" +cityName +"</code>";
+            
+            document.getElementById("banner").style.opacity = "1";
+           
             setTimeout(function() {
-                document.getElementById("banner").style.display = "none";
+                // document.getElementById("banner").style.display = "none";
+                let el = document.getElementById("banner");
+                fade(el);
             }, 1000);
             
         }
@@ -217,6 +226,18 @@ const _get_Forecast_City = async (cityName) => {
       return response;
 };
 
+function fade(element) {
+    var op = 1;  // initial opacity
+    var timer = setInterval(function () {
+        if (op <= 0.1){
+            clearInterval(timer);
+            element.style.display = 'none';
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op -= op * 0.1;
+    }, 50);
+}
 
 
 function _build_Current(response){
