@@ -162,7 +162,7 @@ function _build_Forecast(response){
             //-- add day to page
             days_Section.appendChild(div);
         }
-        
+
         //-- increment to know when to stop building
         numberDays ++;
     };
@@ -197,7 +197,7 @@ const _get_Forecast_City = async (cityName) => {
         );
             
         const json = await res.json();
-        console.log("Got results: ",json);
+        // console.log("Got results: ",json);
         
         if(json.cod == 200){
             _build_Current(json)
@@ -284,10 +284,26 @@ function _build_Current(response){
         + '<span class="humidity">' + city_JSON.main.humidity + '%</span>'
         + '<span class="windspeed">' + city_JSON.wind.speed + ' mph</span>'
         + '<span class="uvi" id="uvi"></span>';
-            
+
     // -- add day to page
     city_Section.appendChild(city_Div);
-}
+
+      //-- Add to local storage
+    search_Entry= {
+        // Where it's to be stored
+        userdata: {
+            // Data stored
+            searched: {
+                [datetime_12()] : {
+                    cityname: city_JSON.name,
+                    icon: city_JSON.weather[0].icon,
+                    temp: city_JSON.main.temp
+                }
+            },
+        },
+    };
+    set_Database(search_Entry);
+    }
 
 
 /*----------------------------------------------------------------------------*/
@@ -376,7 +392,6 @@ function set_Database(entry) {
         
         // If user already defined in local storage, grab it.
         if (database_Current.userdata != null) {
-            
             // Merge current database.userdata to new placeholder
             userdata_Current = database_Current.userdata;
             
@@ -447,7 +462,7 @@ function set_Database(entry) {
         } 
 
         //--If entry provides api values
-        if (entry.api != null){        
+        if (entry.searched != null){        
             // TODO:: 12/08/2021 #EP || Confirm if this is working once api data in
             
             // Merge settings_Current together from curent and entry
@@ -517,7 +532,7 @@ function _load_Database() {
                 },
             },
             //-- users saved list. Stores full payload
-            saved: {},
+            searched: {},
 
             //-- first login ever
             login_First: null, //TODO:: 12/08/2021 #EP || Make only update once
@@ -540,7 +555,7 @@ function _load_Database() {
         
         //-- API SETTINGS
         api: {
-            petfinder: {}
+            openweather: {}
         }
     };
     //-- end of database_Default
@@ -582,7 +597,7 @@ function _set_DemoData(){
                 },
             },
             //-- users saved list. Stores full payload
-            saved: {},
+            searched: {},
             
             //-- first login ever
             login_First: '20211208 17:12:64:126 pm', //TODO:: 12/08/2021 #EP || Make only update once
@@ -605,7 +620,7 @@ function _set_DemoData(){
         
         //-- API SETTINGS
         api: {
-            petfinder: {
+            openweather: {
 
             }
         }
