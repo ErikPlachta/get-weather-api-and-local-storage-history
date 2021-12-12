@@ -126,10 +126,11 @@ a {
 
 /* ALL ELEMENTS --> END */
 /* -------------------------------------------------------------------------- */
-/* HEADER & NAV --> START */
+/* START --> HEADER, SEARCH, HISTORY & INPUTS */
 
+
+/*-- Title and Search to get forecast */
 header {
-  /* Animation on loading */
   padding: .5rem;
   background-color: var(--bg_Container);
   color: var(--color_Primary);
@@ -140,6 +141,7 @@ header {
   padding-bottom: 0;
   margin-bottom: 0;
   box-shadow: var(--boxShadow_Inset_bottom);
+  /* hidden for JS animation to show */
   visibility: hidden;
 }
 
@@ -148,7 +150,7 @@ header {
   flex: 2;
   
 }
-/* SECTION Container holding saerch input, icon and button */
+/*-- SECTION Container holding saerch input, icon and button */
 .search{
   flex: 3;
   display: flex;
@@ -158,17 +160,19 @@ header {
   
 }
 
+/*-- Standard styling for input */
 input#cityName_Search_Input{
   box-shadow: var(--boxShadow_Top);
-  border: none;
+  border: 1px solid var(--border_shadow_1px_25a);
   text-align: center;
   font-weight: bold;
   flex: 5;
   border-radius: .5rem 0 0 .5rem;
-  
 }
+
+/*-- Add inline coloring for focus awareness */
 input#cityName_Search_Input:focus {
-  outline: 1px solid var(--border_shadow_1px_25a);
+  outline: .2px solid var(--color_Accent);
 }
 
 input::placeholder {
@@ -176,41 +180,64 @@ input::placeholder {
 }
 
 
+/*-- Get Forecast Button */
 input#cityname_Search_Btn {
   border-radius: 0 .5rem .5rem 0;
 }
 
-input#search_History_Btn {
-  border-radius: .5rem;
+/*-- Container holding Search History */
+#section_SearchHistory{
+  width: 25%;
+  height: 10rem;
+  float: right;
+  border: 1px solid red;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-input#search_History_Btn,
+/*-- Search History Button */
+input#clear_SearchHistory_Btn {
+  border-radius: 0 0 .5rem .5rem;
+  max-height: 3rem;
+}
+
+
+/*-- Styling for both Buttons */
+input#clear_SearchHistory_Btn,
 input#cityname_Search_Btn{
   background-color: var(--color_Primary);
   color: var(--bg_Body);
   height: 3rem;
   padding: 0 .5rem;
-  float: right;
   flex: 1;
   box-shadow: var(--boxShadow_Top);
   cursor: pointer;
 }
 
-input#search_History_Btn:hover,
+/*-- INPUT HOVER EFFECTS */
+
+/*-- Brighten and add shadow to all inputs */
+input#clear_SearchHistory_Btn:hover,
 input#cityname_Search_Btn:hover,
 input#cityName_Search_Input:hover {
   box-shadow: var(--boxShadow_top_hover_black_25a);
   filter: brightness(110%);
   text-decoration: none;
 }
-input#search_History_Btn:hover,
+
+/*-- Change Font within btn */
+input#clear_SearchHistory_Btn:hover,
 input#cityname_Search_Btn:hover {
   color: var(--color_Accent);
   
 }
 
 
-/* END --> HEADER & NAV */
+
+/* END --> HEADER & INPUTS */
 /* -------------------------------------------------------------------------- */
 /* START --> FORECAST */
 
@@ -329,10 +356,7 @@ div.city {
   text-align: center;
 }
 
-
-
-
-/* END --> DAYS */
+/* END --> FORECAST */
 /* -------------------------------------------------------------------------- */
 /* START --> FOOTER */
 

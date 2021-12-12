@@ -52,31 +52,29 @@
           <input type="text" id="cityName_Search_Input" placeholder="City name..." aria-label="City Name" aria-describedby="cityName">
           <input id="cityname_Search_Btn" type="submit" value="Get Forecast">
         
-      </section>
-      <!-- Remaining -->
-      <section class="container">
-        <!-- TODO:: 12/11/2021 #EP || Create and link to modal -->
-        <input id="search_History_Btn" type="submit" value="Search History">
-      </section>
-      
+      </section>      
     </header>
     <!-- HEADER -> END -->
     <!------------------------------------------------------------------------->
 
-    <!-- Used for event messages -->
+    <!-- Holds any message events to user -->
     <section class='container banner' id='banner'></section>
     
+    <!-- Holds most recently requested forecast -->
     <section class='container forecast' id='forecast_Section'>
-      <!-- Complete Payload Response from API -->
-
       
       <!-- City Current -->
       <article id="city"></article>
       
       <!-- Dailys -->
-      <article id="days"></article>
+      <article id="days"></article>      
       
-      
+    </section>
+
+    <!-- Search History Log -->
+    <section class="container" id='section_SearchHistory'>
+      <h3>Search History</h3>
+      <input id="clear_SearchHistory_Btn" type="submit" value="Clear History">
       
     </section>
 
