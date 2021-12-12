@@ -217,8 +217,8 @@ const _get_Forecast_City = async (cityName) => {
            
             setTimeout(function() {
                 // document.getElementById("banner").style.display = "none";
-                let el = document.getElementById("banner");
-                fade(el);
+                
+                fade(document.getElementById("banner"));
             }, 1000);
             
         }
@@ -227,17 +227,29 @@ const _get_Forecast_City = async (cityName) => {
 };
 
 function fade(element) {
-    var op = 1;  // initial opacity
+    
+    //-- Get elements current opacity
+    var op = element.style.opacity;  // initial opacity
+    
+    //-- Fade Opacity in increments. (var so can clear timer once done)
     var timer = setInterval(function () {
-        if (op <= 0.1){
-            clearInterval(timer);
-            element.style.display = 'none';
-        }
+        
+        //-- Set Opacity to the value of OP
         element.style.opacity = op;
+        
+        //-- Setting Opacity with calculation to make smooth transition
         element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        
+        //-- Once to 0.1, stop interval and set opacity to zero
+        if (op <= 0.1){
+            clearInterval(timer);    
+            element.style.opacity = '0';
+        }
+        //-- Reduce opacity by 0.1
         op -= op * 0.1;
-    }, 50);
-}
+    }, 100);
+    
+};
 
 
 function _build_Current(response){
