@@ -32,14 +32,14 @@
 <body>
     <!------------------------------------------------------------------------->
     <!-- HEADER -> START -->
-    <header>
+    <header id='header'>
 
       <!-- App Name & Tagline -->
       <span id='appBranding'>
         <span class="appName"></span> <!-- Icon to go here -->
         <h1>
           
-          <code>get_Forecast(cityName)</code>
+          <code>get_Forecast()</code>
         </h1>
         <p id="appTagline">
           <code>Search by City to get the current and 5-day Forecast</code>
@@ -49,7 +49,7 @@
       <!-- Search Box -->
       <section class='container search'>
         
-          <input type="text" id="cityName_Search_Input" placeholder="Search for a City to get a forecast" aria-label="City Name" aria-describedby="cityName">
+          <input type="text" id="cityName_Search_Input" placeholder="..." aria-label="City Name" aria-describedby="cityName">
           <input id="cityname_Search_Btn" type="submit" value="Get Forecast">
         
       </section>
@@ -62,7 +62,9 @@
     </header>
     <!-- HEADER -> END -->
     <!------------------------------------------------------------------------->
-    
+
+    <section class='container banner' id='banner'>
+    </section>
     
     <section class='container forecast' id='forecast_Section'>
       <!-- Complete Payload Response from API -->

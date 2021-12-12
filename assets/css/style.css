@@ -1,3 +1,7 @@
+
+/* IMPORTS */
+@import url(./animation.css);
+
 /* -------------------------------------------------------------------------- */
 /* :ROOT --> START */
 :root {
@@ -126,8 +130,6 @@ a {
 
 header {
   /* Animation on loading */
-  -webkit-transition: background .2s ease-in-out;
-  transition: background .2s ease-in-out;
   padding: .5rem;
   background-color: var(--bg_Container);
   color: var(--color_Primary);
@@ -135,7 +137,10 @@ header {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  
+  padding-bottom: 0;
+  margin-bottom: 0;
+  box-shadow: var(--boxShadow_Inset_bottom);
+  visibility: hidden;
 }
 
 #appBranding {
@@ -143,23 +148,6 @@ header {
   flex: 2;
   
 }
-
-nav {
-  /* margin: 0 2rem; */
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  /* justify-content: space-between; */
-  justify-content: center;
-  /* text-align: right; */
-}
-nav span {
-  margin: 2rem 2rem 0 2rem;
-  text-align: bottom;
-}
-
-
-
 /* SECTION Container holding saerch input, icon and button */
 .search{
   flex: 3;
@@ -226,15 +214,34 @@ input#cityname_Search_Btn:hover {
 /* -------------------------------------------------------------------------- */
 /* START --> FORECAST */
 
+section.banner{
+  display: none;
+  box-shadow: var(--boxShadow_Top);
+  color: red;
+  /* background-color: var(--color_Primary); */
+  /* border-bottom: 1px solid var(--color_shadow_01_black); */
+  
+  /* Make appear on top of screen */
+  top: 1;
+  position: absolute;
+  z-index: 100;
+  text-align: center;
+  width: 100%;
+  /* height: 1rem; */
+  margin: auto;
+}
+
+.cityNotFound {
+  opacity: 0;
+  cursor: pointer;
+  transition: visibility 0s linear 3000ms, opacity 3000ms;
+}
 
 section.forecast {
   box-shadow: var(--boxShadow_Top);
   margin: 3rem auto;
-  width: 90%;
+  width:70%;
   border-radius: .5rem;
-  /* padding: 2rem; */
-  
-  
   
   background-color: var(--bg_Body);
   display: none;

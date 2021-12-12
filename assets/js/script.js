@@ -204,7 +204,14 @@ const _get_Forecast_City = async (cityName) => {
             _get_Forecast_LatLon(json.coord.lon,json.coord.lat)
             document.getElementById("forecast_Section").style.display = "flex";
         } else {
+            document.getElementById("forecast_Section").style.display = "none";
             console.log(json.message, json.cod)
+            document.getElementById("banner").innerText = "ERROR: " + json.message + " : " +cityName;
+            document.getElementById("banner").style.display = "block";
+            setTimeout(function() {
+                document.getElementById("banner").style.display = "none";
+            }, 1000);
+            
         }
       })();
       return response;
@@ -611,3 +618,8 @@ run();
 //-- RUNNING --> END
 /*----------------------------------------------------------------------------*/
 
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+      document.getElementById('header').className = 'slideDown';
+    }, 100);
+}, false);
