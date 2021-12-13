@@ -1,15 +1,8 @@
-# a Weather_Forecast_App
-> ( *name change pending* )
+# get_Weather(city)
 
-## Summary 
+## [Enter a city name for current weather and a 5-Day forecast](https://erikplachta.github.io/get_Weather_arg_City/)
 
-> ( *TBD* )
-## Outline
-
-i. Link to Published App
-ii. Contributors
-iii. Mileones
-iv. Resources
+[![Example](./assets/images/demo1.png)](https://erikplachta.github.io/get_Weather_arg_City/)
 
 ## i. Link To Published App
 

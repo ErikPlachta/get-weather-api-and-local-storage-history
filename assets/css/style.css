@@ -182,12 +182,16 @@ input#cityname_Search_Btn {
 
 /*-- Container holding Search History */
 #section_SearchHistory{
+  
   width: 25%;
   height: 10rem;
   float: right;
   /* border: 1px solid red; */
   text-align: center;
-  display: flex;
+  
+  display: none;
+
+  /* display: flex; */
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
