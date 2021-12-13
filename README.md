@@ -1,27 +1,28 @@
 # get_Weather(city)
 
-## [Enter a city name for current weather and a 5-Day forecast](https://erikplachta.github.io/get_Weather_arg_City/)
-
-[![Example](./assets/images/demo1.png)](https://erikplachta.github.io/get_Weather_arg_City/)
-
-## i. Link To Published App
+A simple app using the API [Open Weather Map](https://openweathermap.org/api) to get a Weather Forecast for the current time along with the five-day forecast.
 
 ---
 
-## ii. Contributor(s)
+## [Enter a city name for current weather and a 5-Day forecast ( link )](https://erikplachta.github.io/get_Weather_arg_City/)
 
-### ![Erik Plachta](https://s.gravatar.com/avatar/cde2e5381aa5e6d8d0220c46edee8f88?s=30) [Erik Plachta](www.github.com/erikplachta)
+[![Example](./assets/images/demo1.png)](https://erikplachta.github.io/get_Weather_arg_City/)
 
-- Priamry contributions were [ ]
-- Link to About Me Page [ ]
+---
+## Contact Me
 
 
-## iii. Mileones
+![Erik Plachta](https://s.gravatar.com/avatar/cde2e5381aa5e6d8d0220c46edee8f88?s=30)
+[![Github](https://img.shields.io/badge/-@erikplachta-000?style=flat&logo=Github&logoColor=white)](https://github.com/ErikPlachta)
+[![Medium](https://img.shields.io/badge/-blog.erikplachta.com-000000?style=flat&labelColor=000000&logo=Medium&link=http://blog.erikplachta.com/)](http://blog.erikplachta.com/)
+[![Twitter](https://img.shields.io/badge/-@erikplachta-1ca0f1?style=flat&labelColor=1ca0f1&logo=twitter&logoColor=white&link=https://twitter.com/erikplachta)](https://twitter.com/erikplachta)
 
-- [ ] Define App Goal
-- [ ] b
-- [ ] c
+---
 
-## iv. Resources
+## TODOs
 
-> Third-Party APIs and related resources used in this APP.
+- [x] Connect to Open Weather Map API
+- [x] UI to display current and 5-day forecast
+- [x] Responsive Header
+- [ ] Responsive Body
+- [ ] Local Database to store search history
