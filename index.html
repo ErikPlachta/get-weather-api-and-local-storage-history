@@ -32,66 +32,73 @@
 <body>
     <!------------------------------------------------------------------------->
     <!-- HEADER -> START -->
-    <header>
+    <header id='header'>
 
       <!-- App Name & Tagline -->
       <span id='appBranding'>
         <span class="appName"></span> <!-- Icon to go here -->
         <h1>
-          <span class="material-icons globe">travel_explore</span>
-          Weather App
+          
+          <code>get_Forecast(city)</code>
         </h1>
-        <p id="appTagline">Search by City to get the current and 5-day Forecast</p>
+        <p id="appTagline">
+          <code>Search by City to get the current and 5-day Forecast</code>
+        </p>
       </span>
       
       <!-- Search Box -->
       <section class='container search'>
         
-          <input type="text" id="cityName_Search_Input" placeholder="Search for a City to get a forecast" aria-label="City Name" aria-describedby="cityName">
+          <input type="text" id="cityName_Search_Input" placeholder="City name..." aria-label="City Name" aria-describedby="cityName">
           <input id="cityname_Search_Btn" type="submit" value="Get Forecast">
         
-      </section>
-      <!-- Remaining -->
-      <section> 
-        <!-- TODO:: 12/11/2021 #EP || Create and link to modal -->
-        <span>Search History</span> 
-      </section>
-      
+      </section>      
     </header>
     <!-- HEADER -> END -->
     <!------------------------------------------------------------------------->
-    
-    
-    <section class='container forecast' id='forecast_Section'>
-      <!-- Complete Payload Response from API -->
+    <!-- Holds any message events to user -->
+    <section class='container banner' id='banner'></section>
+
+    <!-- Parent container holds Forecast & Search History -->
+    <section class='container' id='parent'>
+      
+      <!-- Holds most recently requested forecast -->
+      <section class='container forecast' id='forecast_Section'>
+        
+        <!-- City Current -->
+        <article id="city"></article>
+        
+        <!-- Dailys -->
+        <article id="days"></article>      
+        
+      </section>
+
+      <!-- Search History Log -->
+      <section class="container" id='section_SearchHistory'>
+        <h3>Search History</h3>
+        <input id="clear_SearchHistory_Btn" type="submit" value="Clear History">
+        
+      </section>
+
+      <!------------------------------------------------------------------------->
+      <!-- FOOTER -> START-->
+      <footer></footer>
+      <!-- FOOTER -> END-->
+      <!------------------------------------------------------------------------->
+      <!-- SCRIPT -> START-->
 
       
-      <!-- City Current -->
-      <article id="city"></article>
-      
-      <!-- Dailys -->
-      <article id="days"></article>
-      
-      
-      
+      <!-- jQUERY -->
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <!-- Moment.js -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+              integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+              crossorigin="anonymous"
+              referrerpolicy="no-referrer">
+      </script>
+    
+    
     </section>
-
-    <!------------------------------------------------------------------------->
-    <!-- FOOTER -> START-->
-    <footer></footer>
-    <!-- FOOTER -> END-->
-    <!------------------------------------------------------------------------->
-    <!-- SCRIPT -> START-->
-
-    
-    <!-- jQUERY -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <!-- Moment.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
-            integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer">
-    </script>
 
     
     <!-- CUSTOM JS -->

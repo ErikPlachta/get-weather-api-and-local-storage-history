@@ -45,6 +45,36 @@ const apiKey ="d5291050dfed6abda18c09f0e663326d";
 
 
 /*----------------------------------------------------------------------------*/
+//-- START --> SEARCH
+
+
+//-- When 
+$( "#cityname_Search_Btn").click(function(){
+    
+    // Clear out containers holding current weather
+    document.getElementById("city").innerHTML = "";
+    document.getElementById("days").innerHTML = "";
+
+    // get EU saerch value
+    let cityname_Searched = document.getElementById("cityName_Search_Input").value;
+    
+    // if EU typed anything
+    if(cityname_Searched != ''){
+        
+        //-- Try to get the forecast
+        _get_Forecast_City(cityname_Searched);
+    }
+
+    //-- If didn't type anything
+    else {
+        console.log("search == null")
+    }
+});
+
+
+//-- END --> SEARCH
+
+/*----------------------------------------------------------------------------*/
 //-- FORECAST    
     
 //-- Access the open weather map API by city name        
@@ -54,7 +84,7 @@ const _get_Forecast_LatLon = async (lat,lon) => {
     const response = (async () => {
         
         // https://openweathermap.org/api/one-call-api
-        const res = await fetch('http://api.openweathermap.org/data/2.5/onecall?lat=35.2271&lon=-80.8431'
+        const res = await fetch('https://api.openweathermap.org/data/2.5/onecall?lat=35.2271&lon=-80.8431'
             +'&exclude=hourly,minutely,current'
             +'&units=imperial'
             +'&appid=' +apiKey,
@@ -119,7 +149,7 @@ function _build_Forecast(response){
             div.innerHTML = 
                 
                 '<h4 class="date">' + weekday + '</h4>'
-                +'<img class="weathericon" src="http://openweathermap.org/img/w/'
+                +'<img class="weathericon" src="https://openweathermap.org/img/w/'
                     + day_JSON.weather[0].icon 
                     + '.png">'
                 + '<span class="temp">' + day_JSON.temp.day + '°</span>'
@@ -130,7 +160,7 @@ function _build_Forecast(response){
             //-- add day to page
             days_Section.appendChild(div);
         }
-        
+
         //-- increment to know when to stop building
         numberDays ++;
     };
@@ -150,14 +180,14 @@ function _build_Forecast(response){
 /*----------------------------------------------------------------------------*/
 //-- CITY
 
-const _get_City = async (cityName) => {
+const _get_Forecast_City = async (cityName) => {
     
     // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
     const response = (async () => {
         
         // const res = await fetch('http://api.openweathermap.org/data/2.5/forecast?q='
         
-        const res = await fetch('http://api.openweathermap.org/data/2.5/weather?q='
+        const res = await fetch('https://api.openweathermap.org/data/2.5/weather?q='
             + cityName
             +'&appid=' +apiKey
             +'&units=imperial',
@@ -165,13 +195,58 @@ const _get_City = async (cityName) => {
         );
             
         const json = await res.json();
-        console.log("Got results: ",json);
-        _build_Current(json)
-        _get_Forecast_LatLon(json.coord.lon,json.coord.lat)
+        // console.log("Got results: ",json);
+        
+        if(json.cod == 200){
+            _build_Current(json)
+            _get_Forecast_LatLon(json.coord.lon,json.coord.lat)
+            
+            //-- Hide forecase section if was display hidden
+            document.getElementById("forecast_Section").style.display = "flex";
+        } else {
+            
+            //-- Hide forecase section if was display visible
+            // document.getElementById("forecast_Section").innerHTML = "Test";
+           
+            //-- Update Banner with Error message
+            document.getElementById("banner").innerHTML = "<B>ERROR</B>: " + json.message + " : <code>" +cityName +"</code>";
+            
+            //-- Banner Error Alert. Starts Fade in 1s
+            document.getElementById("banner").style.opacity = "1";
+            setTimeout(function() {
+                // document.getElementById("banner").style.display = "none";
+                fade(document.getElementById("banner"));
+            }, 1000);
+            
+        }
       })();
       return response;
 };
 
+function fade(element) {
+    document.getElementById("banner").style.opacity = "1";
+    //-- Get elements current opacity
+    var op = element.style.opacity;  // initial opacity
+    
+    //-- Fade Opacity in increments. (var so can clear timer once done)
+    var timer = setInterval(function () {
+        
+        //-- Set Opacity to the value of OP
+        element.style.opacity = op;
+        
+        //-- Setting Opacity with calculation to make smooth transition
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        
+        //-- Once to 0.1, stop interval and set opacity to zero
+        if (op <= 0.1){
+            clearInterval(timer);
+            element.style.opacity = '0';
+        }
+        //-- Reduce opacity by 0.1
+        op -= op * 0.1;
+    }, 100);
+    
+};
 
 
 function _build_Current(response){
@@ -201,16 +276,32 @@ function _build_Current(response){
     city_Div.innerHTML = 
         '<h1>'+city_JSON.name+'</h1>'
         +'<h3 class="date">' + city_Day + '</h3>'
-        +'<img class="weathericon" src="http://openweathermap.org/img/w/' + city_JSON.weather[0].icon + '.png">'
-        
-        + '<span class="temp">' + city_JSON.main.temp + '°</span>'
+        +'<img class="weathericon" alt="' + city_JSON.weather[0].description
+        +'" src="https://openweathermap.org/img/w/' + city_JSON.weather[0].icon + '.png">'
+        + '<span class="temp">' + city_JSON.main.temp + '° F</span>'
         + '<span class="humidity">' + city_JSON.main.humidity + '%</span>'
         + '<span class="windspeed">' + city_JSON.wind.speed + ' mph</span>'
         + '<span class="uvi" id="uvi"></span>';
-            
+
     // -- add day to page
     city_Section.appendChild(city_Div);
-}
+
+      //-- Add to local storage
+    search_Entry= {
+        // Where it's to be stored
+        userdata: {
+            // Data stored
+            searched: {
+                [datetime_12()] : {
+                    cityname: city_JSON.name,
+                    icon: city_JSON.weather[0].icon,
+                    temp: city_JSON.main.temp
+                }
+            },
+        },
+    };
+    set_Database(search_Entry);
+    }
 
 
 /*----------------------------------------------------------------------------*/
@@ -299,7 +390,6 @@ function set_Database(entry) {
         
         // If user already defined in local storage, grab it.
         if (database_Current.userdata != null) {
-            
             // Merge current database.userdata to new placeholder
             userdata_Current = database_Current.userdata;
             
@@ -370,7 +460,7 @@ function set_Database(entry) {
         } 
 
         //--If entry provides api values
-        if (entry.api != null){        
+        if (entry.searched != null){        
             // TODO:: 12/08/2021 #EP || Confirm if this is working once api data in
             
             // Merge settings_Current together from curent and entry
@@ -440,7 +530,7 @@ function _load_Database() {
                 },
             },
             //-- users saved list. Stores full payload
-            saved: {},
+            searched: {},
 
             //-- first login ever
             login_First: null, //TODO:: 12/08/2021 #EP || Make only update once
@@ -463,7 +553,7 @@ function _load_Database() {
         
         //-- API SETTINGS
         api: {
-            petfinder: {}
+            openweather: {}
         }
     };
     //-- end of database_Default
@@ -505,7 +595,7 @@ function _set_DemoData(){
                 },
             },
             //-- users saved list. Stores full payload
-            saved: {},
+            searched: {},
             
             //-- first login ever
             login_First: '20211208 17:12:64:126 pm', //TODO:: 12/08/2021 #EP || Make only update once
@@ -528,7 +618,7 @@ function _set_DemoData(){
         
         //-- API SETTINGS
         api: {
-            petfinder: {
+            openweather: {
 
             }
         }
@@ -543,40 +633,6 @@ function _set_DemoData(){
 };
 
 //-- TESTING --> END
-/*----------------------------------------------------------------------------*/
-//-- START --> SEARCH
-
-//-- Browser focus to typing
-$("#cityName_Search_Input").trigger('focus');
-
-//-- When 
-$( "#cityname_Search_Btn").click(function(){
-    
-    // claer out containers holding current weather
-    document.getElementById("city").innerHTML = "";
-    document.getElementById("days").innerHTML = "";
-
-    // get EU saerch value
-    let cityname_Searched = document.getElementById("cityName_Search_Input").value;
-    
-    // if Eu typed anything
-    if(cityname_Searched != ''){
-        
-        // console.log(cityname_Searched)
-        
-        document.getElementById("forecast_Section").style.display = "flex";
-        
-        _get_City(cityname_Searched);
-    }
-
-    //-- If didn't type anything
-    else {
-        console.log("search == null")
-    }
-});
-
-
-//-- END --> SEARCH
 /*----------------------------------------------------------------------------*/
 //-- RUNNING --> START
 
@@ -598,12 +654,23 @@ function run(){
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
+};
   
 
 run();
 
-
 //-- RUNNING --> END
 /*----------------------------------------------------------------------------*/
+//-- ANIMATIONS --> START
 
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+      document.getElementById('header').className = 'slideDown';
+    }, 100);
+}, false);
+
+//-- Browser focus to typing
+$("#cityName_Search_Input").trigger('focus');
+
+//-- ANIMATIONS --> END
+/*----------------------------------------------------------------------------*/
