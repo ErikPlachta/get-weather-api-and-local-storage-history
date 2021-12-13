@@ -132,7 +132,7 @@ a {
 /*-- Title and Search to get forecast */
 header {
   padding: .5rem;
-  background-color: var(--bg_Container);
+  background-color: var(--bg_Body);
   color: var(--color_Primary);
   display: flex;
   flex-direction: row;
@@ -174,11 +174,6 @@ input#cityName_Search_Input{
 input#cityName_Search_Input:focus {
   outline: .2px solid var(--color_Accent);
 }
-
-input::placeholder {
-  /* color: var(--color_Primary); */
-}
-
 
 /*-- Get Forecast Button */
 input#cityname_Search_Btn {

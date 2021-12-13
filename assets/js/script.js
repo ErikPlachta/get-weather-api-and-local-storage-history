@@ -47,8 +47,6 @@ const apiKey ="d5291050dfed6abda18c09f0e663326d";
 /*----------------------------------------------------------------------------*/
 //-- START --> SEARCH
 
-//-- Browser focus to typing
-$("#cityName_Search_Input").trigger('focus');
 
 //-- When 
 $( "#cityname_Search_Btn").click(function(){
@@ -656,11 +654,10 @@ function run(){
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
+};
   
 
 run();
-
 
 //-- RUNNING --> END
 /*----------------------------------------------------------------------------*/
@@ -671,6 +668,9 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('header').className = 'slideDown';
     }, 100);
 }, false);
+
+//-- Browser focus to typing
+$("#cityName_Search_Input").trigger('focus');
 
 //-- ANIMATIONS --> END
 /*----------------------------------------------------------------------------*/
