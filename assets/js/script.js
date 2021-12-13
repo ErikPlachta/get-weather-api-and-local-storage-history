@@ -278,9 +278,9 @@ function _build_Current(response){
     city_Div.innerHTML = 
         '<h1>'+city_JSON.name+'</h1>'
         +'<h3 class="date">' + city_Day + '</h3>'
-        +'<img class="weathericon" src="https://openweathermap.org/img/w/' + city_JSON.weather[0].icon + '.png">'
-        
-        + '<span class="temp">' + city_JSON.main.temp + '°</span>'
+        +'<img class="weathericon" alt="' + city_JSON.weather[0].description
+        +'" src="https://openweathermap.org/img/w/' + city_JSON.weather[0].icon + '.png">'
+        + '<span class="temp">' + city_JSON.main.temp + '° F</span>'
         + '<span class="humidity">' + city_JSON.main.humidity + '%</span>'
         + '<span class="windspeed">' + city_JSON.wind.speed + ' mph</span>'
         + '<span class="uvi" id="uvi"></span>';

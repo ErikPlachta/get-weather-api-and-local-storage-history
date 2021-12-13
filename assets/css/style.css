@@ -138,8 +138,6 @@ header {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding-bottom: 0;
-  margin-bottom: 0;
   box-shadow: var(--boxShadow_Inset_bottom);
   /* hidden for JS animation to show */
   visibility: hidden;
@@ -274,8 +272,8 @@ section.banner{
 /* START --> FORECAST */
 
 #parent {
-  box-shadow: var(--boxShadow_Top);
-  margin: 3rem auto;
+  /* box-shadow: var(--boxShadow_Top); */
+  margin: auto;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -338,7 +336,7 @@ div.city {
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-between;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 /* DIV Container holding each unique day */
@@ -384,6 +382,7 @@ div.city {
   
   /* history goes below current forecast */
   #parent {
+    margin: 1rem auto;
     flex-direction: column;
   }
 
@@ -398,30 +397,97 @@ div.city {
 
   /*-- Search fit screen and add styling to division more claer */
   #section_SearchHistory{
+    display: none;
     width: 90%;
     margin: auto;
     box-shadow: var(--boxShadow_inset_Top);
   }
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 755px) {
 
+  
+  header,
+  .search {
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: auto;
+    padding: 1rem 0;
+    width: 100%;
+  }
+  
+  #appBranding {
+    margin: 1rem;
+    text-align: center;
+    
+  }
+
+  input#cityName_Search_Input{
+    border-radius: .5rem .5rem 0 0;
+  }
+
+  input#cityname_Search_Btn {
+    border-radius: 0 0 .5rem .5rem;
+  }
+
+  input#cityName_Search_Input,
+  input#cityname_Search_Btn {
+    /* margin: 1rem 0; */
+    /* padding: 1rem 0; */
+    margin: auto;
+    min-height: 3rem;
+    width: 90%;
+  }
   
   /*-- Forecast fit screen and keeps on oneline */
   #forecast_Section{
     width: 90%;
     margin: auto;
+    flex-direction: column;
+    justify-content: center; 
+  }
+  
+  div.city {
+    /* flex: 1; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
-    
+    border-bottom: var(--border_shadow_1px_1a);
+    font-size: 1rem;
+    flex-flow: nowrap;
+  }
+
+  .day,
+  #days
+  {
+    flex: 5; 
+    margin: 0;
+    /* padding: 0; */
+    /* white-space: nowrap; */
   }
 }
 
 
-@media screen and (max-width: 650) {
+@media screen and (max-width: 555px) {
+
+  #days,
+  div.city {
+    flex-direction: column;
+    
+    width: 80%;
+    flex: 1;
+    margin: auto;
+  }
+  .day {
+    flex-direction: row;
+    flex-flow: nowrap;
+  }
+
   
-  /*-- Title and Search to get forecast */
-  /* TODO:: 12/12/2021 #EP || To make search button fit smaller screen better automatically */
 }
+
 
 /* MEDIA SPECIFIC --> END  */
 /* -------------------------------------------------------------------------- */
