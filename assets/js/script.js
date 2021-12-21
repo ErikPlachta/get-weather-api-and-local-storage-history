@@ -197,13 +197,20 @@ const _get_Forecast_City = async (cityName) => {
         const json = await res.json();
         // console.log("Got results: ",json);
         
+        //-- If successful response, update content
         if(json.cod == 200){
-            _build_Current(json)
-            _get_Forecast_LatLon(json.coord.lon,json.coord.lat)
+            //-- Build current data for city
+            _build_Current(json);
+            //-- Build forecast
+            _get_Forecast_LatLon(json.coord.lon,json.coord.lat);
+            //-- Append to history
+            _set_Search_History(cityName);
             
-            //-- Hide forecase section if was display hidden
+            //-- Show forecast section if was hidden
             document.getElementById("forecast_Section").style.display = "flex";
-        } else {
+        }
+        //-- If failed response for some reason, return message
+        else {
             
             //-- Hide forecase section if was display visible
             // document.getElementById("forecast_Section").innerHTML = "Test";
@@ -301,8 +308,21 @@ function _build_Current(response){
         },
     };
     set_Database(search_Entry);
-    }
+};
 
+
+//-- Sets history conatiner with cities
+function _set_Search_History(cityName){
+    // $( "#searchHistory_Results" );
+    // document.getElementById("searchHistory_Results").innerText = cityName;
+
+    //-- Get current search hsitory HTML
+    let searchHistory_Current = document.getElementById("searchHistory_Results").innerHTML;
+    
+    //-- Update current history with new search
+    searchHistory_Current = searchHistory_Current + "<span>"+cityName+"</span>";
+    document.getElementById("searchHistory_Results").innerHTML = searchHistory_Current;
+};
 
 /*----------------------------------------------------------------------------*/
 /*-- DATABASE MANAGEMENT --> START

@@ -73,12 +73,25 @@
         
       </section>
 
-      <!-- Search History Log -->
-      <section class="container" id='section_SearchHistory'>
-        <h3>Search History</h3>
-        <input id="clear_SearchHistory_Btn" type="submit" value="Clear History">
+
+      <!----------------------------------------------------------------------->
+      <!-- START -> Search History -->
+      
+      <section class="container" id='searchHistory_Section'>
+        <!-- Header of section -->
+        <span id="searchHistory_Title">
+          <h3>Search History</h3>
+          <input id="clear_SearchHistory_Btn" type="submit" value="Clear History">
+        </span>
         
+        <!-- Actual history updated dynamically with JS and from local storage-->
+        <article id="searchHistory_Results"></article>
       </section>
+
+      <!-- END -> Search History -->
+      <!----------------------------------------------------------------------->
+        
+    </section>
 
       <!------------------------------------------------------------------------->
       <!-- FOOTER -> START-->
@@ -97,8 +110,6 @@
               referrerpolicy="no-referrer">
       </script>
     
-    
-    </section>
 
     
     <!-- CUSTOM JS -->
