@@ -92,7 +92,7 @@ const _get_Forecast_LatLon = async (lat,lon) => {
         );
         const json = await res.json();
         console.log("Got results: ",json);
-        _build_Forecast(json)
+        _build_Forecast(json);
       })();
       return response;
 };
@@ -201,10 +201,10 @@ const _get_Forecast_City = async (cityName) => {
         if(json.cod == 200){
             //-- Build current data for city
             _build_Current(json);
-            //-- Build forecast
-            _get_Forecast_LatLon(json.coord.lon,json.coord.lat);
-            //-- Append to history
-            _set_Search_History(cityName);
+            //-- Build forecast and update search History
+            _get_Forecast_LatLon(json.coord.lon,json.coord.lat)
+            
+            
             
             //-- Show forecast section if was hidden
             document.getElementById("forecast_Section").style.display = "flex";
@@ -294,7 +294,7 @@ function _build_Current(response){
     city_Section.appendChild(city_Div);
 
       //-- Add to local storage
-    search_Entry= {
+    const search_Entry = {
         // Where it's to be stored
         userdata: {
             // Data stored
@@ -315,6 +315,8 @@ function _build_Current(response){
 function _set_Search_History(cityName){
     // $( "#searchHistory_Results" );
     // document.getElementById("searchHistory_Results").innerText = cityName;
+
+    console.log(cityName)
 
     //-- Get current search hsitory HTML
     let searchHistory_Current = document.getElementById("searchHistory_Results").innerHTML;
@@ -388,7 +390,7 @@ function set_Database(entry) {
     
     //--------------------------------
     //-- LOCAL VAR --> START
-
+    console.log("set_Database(search_Entry): ", entry)
     // Used to merge existing and new database changes, then written to Local Storage
     let database_New = {userdata:{}, settings:{}, api:{} };
     
@@ -454,6 +456,12 @@ function set_Database(entry) {
                 if(userdata_Current[key] == undefined){                
                     userdata_Current[key] = entry.userdata[key];
                 }
+                
+                console.log("userData: Key -> ", key)
+                for (val in entry.userdata[key]) {
+                    console.log(entry.userdata[key][val])
+                }
+
             };
             
             /* FOR EACH DATE IN TIMELINE
@@ -480,11 +488,11 @@ function set_Database(entry) {
         } 
 
         //--If entry provides api values
-        if (entry.searched != null){        
+        if (entry.userdata != null){        
             // TODO:: 12/08/2021 #EP || Confirm if this is working once api data in
             
             // Merge settings_Current together from curent and entry
-            api_Current = Object.assign({},api_Current, entry.api);
+            userdata_Current = Object.assign({},userdata_Current, entry.userdata);
         } 
     }; 
 
@@ -515,7 +523,7 @@ function set_Database(entry) {
 
     //-- END -> BUILDING DICTIONARY  
     
-    //  console.log("function set_Database(entry): database_New ", database_New);
+     console.log("function set_Database(entry): database_New ", database_New);
 
     // Updating Database
     localStorage.setItem(database_Name, JSON.stringify(database_New));
