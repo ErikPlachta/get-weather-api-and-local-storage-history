@@ -405,12 +405,12 @@ function set_Database(entry) {
     //-- LOCAL VAR --> START
     console.log("set_Database(search_Entry): ", entry)
     // Used to merge existing and new database changes, then written to Local Storage
-    let database_New = {userdata:{}, settings:{}, api:{} };
+    let database_New = {userdata:{}, settings:{}};//, api:{} };
     
     // Used to hold current database values if they exist
     let userdata_Current = {};
     let settings_Current = {};
-    let api_Current = {};
+    // let api_Current = {};
     
     //-- LOCAL VAR --> END
     //--------------------------------
@@ -439,14 +439,12 @@ function set_Database(entry) {
         }
 
          // If API already defined in local storage, grab it.
-         if (database_Current.api != null) {
-            api_Current = database_Current.api;
-        }
+        //  if (database_Current.api != null) {
+        //     api_Current = database_Current.api;
+        // }
     }
-    
     // Database not yet built so set some default values
-    else {
-            
+    else {    
         // First login for the user, so update value.
         userdata_Current['login_First'] = datetime_12();   
     }
@@ -454,8 +452,6 @@ function set_Database(entry) {
     // DATABASE INTEGRITY -> END // 
     //--------------------------------//
     //-- ENTRY INTEGRITY -> START //
-
-    //-- TODO:: 12/08/2021 #EP || If the entry fits required params or not. ( a later thing )
 
     //-- If user action to update database or if _Load_Database() ran.
     if(entry != undefined){
@@ -468,41 +464,26 @@ function set_Database(entry) {
                 
                 // console.log(`// key - entry.userdata[key]:${key} - ${JSON.stringify(entry.userdata[key])}`)
                 let key_Holder = entry.userdata[key];
-                
-                if (key === 'searched'){
-                    console.log("!!!");
-                    console.log(`//-- userdata_Current: ${JSON.stringify(userdata_Current)}`)
-                    console.log(`//- SEARCHED: ${JSON.stringify(key_Holder)}`);
-                    // if(entry.userdata)
-                }
-                
-                // for (value in key_Holder){
-                //     if(key != 'login_Last' && key != 'login_First') {
-                //         console.log(`//-- value in key - key_holder - entry.userdata[key]: \n\t${key}\n\t ${JSON.stringify(key_Holder)} \n\t${value}`)
-                //     }
-                // }
 
                 // IF userdata key not yet defined in database, add it.
-                else if(userdata_Current[key] == undefined){                
+                if(userdata_Current[key] == undefined){                
                     
                     //-- if it's the first time logging in, ever
                     if(key === 'login_First'){
                         //-- set the first login value - to be merged below
                         entry.login_First = datetime_12();
                         
-                        console.log("entry.login_First value: ",entry[key]);
-                        console.log("userdata_Current.login_First value: ",userdata_Current[key]);
-                    }
-                    else if(key === 'searched'){
-                        console.log("SERACHED")
-
+                        // console.log("entry.login_First value: ",entry[key]);
+                        // console.log("userdata_Current.login_First value: ",userdata_Current[key]);
                     }
                     else {
                         console.log("value : ",userdata_Current[key])
                         userdata_Current[key] = entry.userdata[key];
                     }
-                    
                     console.log("//-- userdata_Current[key]  == undefined; Need to set as entry value of key: ",key)
+                }
+                else {
+                    console.log("//-- userdata_Current[key]: ",key)
                 }
             };
             
@@ -538,10 +519,10 @@ function set_Database(entry) {
         } 
 
         //--If entry provides api values
-        if (entry.api != null){        
-            // Merge settings_Current together from curent and entry
-            api_Current = Object.assign({},api_Current, entry.api); 
-        }
+        // if (entry.api != null){        
+        //     // Merge settings_Current together from curent and entry
+        //     api_Current = Object.assign({},api_Current, entry.api); 
+        // }
 
         //--If entry provides userdata values
         if (entry.userdata != null){        
@@ -571,10 +552,10 @@ function set_Database(entry) {
         database_New.settings[key] = settings_Current[key];
     });
     // Grab curent API values and merge
-    Object.keys(api_Current).forEach((key) => {
-        // Add key to dictionary
-        database_New.api[key] = api_Current[key];
-    });
+    // Object.keys(api_Current).forEach((key) => {
+    //     // Add key to dictionary
+    //     database_New.api[key] = api_Current[key];
+    // });
     
 
     //-- END -> BUILDING DICTIONARY  
@@ -739,7 +720,7 @@ function run(){
     if (testing != true){
         /* 1. Load the database */
         _load_Database();
-        _set_Location();
+        // _set_Location();
     }
     else {
         console.log("//-- RUNNING TEST")    
