@@ -1,4 +1,3 @@
-
 /*
     Author(s): Erik Plachta
     Date: 12/07/2021
@@ -17,6 +16,8 @@
 /* -------------------------------------------------------------------------- */
 //-- GLOBALS -> START
 
+//-- Location awareness from ISP
+import {get_PublicIP } from './location.js';
 
 // For local storage DB
 var database_Name = "weather";
@@ -115,7 +116,7 @@ function _build_Forecast(response){
     let numberDays = 1;
 
     //-- Itterate through days and build content
-    for (day in days){
+    for (let day in days){
         
         //-- store first day for easy building
         let day_JSON = days[day];
@@ -374,7 +375,6 @@ function _get_Search_History(){
 function get_Database(){
     // Use to to get the current database in JSON format. Always returns dict.
 
-    
     // Get Database from local storage, build into JSON dict
     let database_Current = JSON.parse(localStorage.getItem(database_Name));
     
@@ -473,7 +473,7 @@ function set_Database(entry) {
         if(entry.userdata != null){
             
             // Build userdata results
-            for (key in entry.userdata){
+            for (var key in entry.userdata){
                 
                 // console.log(`// key - entry.userdata[key]:${key} - ${JSON.stringify(entry.userdata[key])}`)
                 let key_Holder = entry.userdata[key];
@@ -518,7 +518,7 @@ function set_Database(entry) {
             /* FOR EACH SEARCH RESULT IN SEARCH HISTORY
 
             */
-            for(city in entry.userdata.searched){
+            for(let city in entry.userdata.searched){
                 //TODO:: 01/07/2021 #EP || Build this out to actually update
                 console.log(`city: ${city}`);
             }
@@ -528,7 +528,7 @@ function set_Database(entry) {
                 Itterate through userdata.timeline dates, update the database.
                 Used when page runs, so if new date on load new timeline entry
             */
-            for(date in entry.userdata.timeline){
+            for(let date in entry.userdata.timeline){
                 //add entry value to what will be written to local storage
                 userdata_Current.timeline[date] = entry.userdata.timeline[date];
                 
@@ -729,6 +729,16 @@ function _set_DemoData(){
 /*----------------------------------------------------------------------------*/
 //-- RUNNING --> START
 
+const _set_Location = async function(){
+    
+    const PublicIP = await get_PublicIP()
+    .then(response => {
+        
+        console.log(response)
+        return (response);
+    })
+}
+
 
 function run(){
     
@@ -738,7 +748,7 @@ function run(){
     if (testing != true){
         /* 1. Load the database */
         _load_Database();
-
+        _set_Location();
     }
     else {
         console.log("//-- RUNNING TEST")    
@@ -748,7 +758,7 @@ function run(){
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 };
-  
+
 
 run();
 
