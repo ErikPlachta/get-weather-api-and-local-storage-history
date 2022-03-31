@@ -326,6 +326,26 @@ function _set_Search_History(cityName){
     document.getElementById("searchHistory_Results").innerHTML = searchHistory_Current;
 };
 
+
+function _get_Search_History(){
+
+    //-- Get Database
+    let database_Current = get_Database();
+
+    //-- Get Search History
+    let searchHistory = database_Current.userdata['searched']
+
+    //-- Grab container
+    if (searchHistory){
+        console.log(searchHistory)
+    }
+    
+
+    //-- Set based on history
+
+
+};
+
 /*----------------------------------------------------------------------------*/
 /*-- DATABASE MANAGEMENT --> START
     - Manages all database related functionality with three functions. 
@@ -406,6 +426,8 @@ function set_Database(entry) {
     // Getting local storage database to add to new OBJ to re-write to storage once verified
     let database_Current = get_Database(); 
 
+    console.log("database_Current: ", database_Current)
+
     // If a Database in Local Storage already exists, verify & collect keys + content
         //-- NOTE: If not true, it's a new database.
     if (database_Current != null) {
@@ -413,6 +435,7 @@ function set_Database(entry) {
         // If user already defined in local storage, grab it.
         if (database_Current.userdata != null) {
             // Merge current database.userdata to new placeholder
+            
             userdata_Current = database_Current.userdata;
             
             // update last login time
@@ -452,17 +475,53 @@ function set_Database(entry) {
             // Build userdata results
             for (key in entry.userdata){
                 
-                // IF userdata key not yet defined in database, add it.
-                if(userdata_Current[key] == undefined){                
-                    userdata_Current[key] = entry.userdata[key];
+                // console.log(`// key - entry.userdata[key]:${key} - ${JSON.stringify(entry.userdata[key])}`)
+                let key_Holder = entry.userdata[key];
+                
+                if (key === 'searched'){
+                    console.log("!!!");
+                    console.log(`//-- userdata_Current: ${JSON.stringify(userdata_Current)}`)
+                    console.log(`//- SEARCHED: ${JSON.stringify(key_Holder)}`);
+                    // if(entry.userdata)
                 }
                 
-                console.log("userData: Key -> ", key)
-                for (val in entry.userdata[key]) {
-                    console.log(entry.userdata[key][val])
-                }
+                // for (value in key_Holder){
+                //     if(key != 'login_Last' && key != 'login_First') {
+                //         console.log(`//-- value in key - key_holder - entry.userdata[key]: \n\t${key}\n\t ${JSON.stringify(key_Holder)} \n\t${value}`)
+                //     }
+                // }
 
+                // IF userdata key not yet defined in database, add it.
+                else if(userdata_Current[key] == undefined){                
+                    
+                    //-- if it's the first time logging in, ever
+                    if(key === 'login_First'){
+                        //-- set the first login value - to be merged below
+                        entry.login_First = datetime_12();
+                        
+                        console.log("entry.login_First value: ",entry[key]);
+                        console.log("userdata_Current.login_First value: ",userdata_Current[key]);
+                    }
+                    else if(key === 'searched'){
+                        console.log("SERACHED")
+
+                    }
+                    else {
+                        console.log("value : ",userdata_Current[key])
+                        userdata_Current[key] = entry.userdata[key];
+                    }
+                    
+                    console.log("//-- userdata_Current[key]  == undefined; Need to set as entry value of key: ",key)
+                }
             };
+            
+            /* FOR EACH SEARCH RESULT IN SEARCH HISTORY
+
+            */
+            for(city in entry.userdata.searched){
+                //TODO:: 01/07/2021 #EP || Build this out to actually update
+                console.log(`city: ${city}`);
+            }
             
             /* FOR EACH DATE IN TIMELINE
 
@@ -488,8 +547,14 @@ function set_Database(entry) {
         } 
 
         //--If entry provides api values
+        if (entry.api != null){        
+            // Merge settings_Current together from curent and entry
+            api_Current = Object.assign({},api_Current, entry.api); 
+        }
+
+        //--If entry provides userdata values
         if (entry.userdata != null){        
-            // TODO:: 12/08/2021 #EP || Confirm if this is working once api data in
+            
             
             // Merge settings_Current together from curent and entry
             userdata_Current = Object.assign({},userdata_Current, entry.userdata);
@@ -558,10 +623,10 @@ function _load_Database() {
                 },
             },
             //-- users saved list. Stores full payload
-            searched: {},
+            // searched: {},
 
             //-- first login ever
-            login_First: null, //TODO:: 12/08/2021 #EP || Make only update once
+            login_First: null,
             //-- last login ever.
             login_Last: datetime_12(),
         },
@@ -694,6 +759,8 @@ run();
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(function() {
       document.getElementById('header').className = 'slideDown';
+      document.getElementById('searchHistory_Section').className = 'slideDown';
+      _get_Search_History();
     }, 100);
 }, false);
 
