@@ -40,14 +40,13 @@ const datetime_12 = function() { return moment().format("YYYYMMDD hh:mm:ss:ms a"
 //-- event specific globals
 var user_FirstLogin = false;
 
-
 // https://home.openweathermap.org/api_keys
+// TODO: 03/31/2022 #EP | GET NEW API Key and Make it a env var
 const apiKey ="d5291050dfed6abda18c09f0e663326d";
 
 
 /*----------------------------------------------------------------------------*/
 //-- START --> SEARCH
-
 
 //-- When 
 $( "#cityname_Search_Btn").click(function(){
@@ -59,17 +58,11 @@ $( "#cityname_Search_Btn").click(function(){
     // get EU saerch value
     let cityname_Searched = document.getElementById("cityName_Search_Input").value;
     
-    // if EU typed anything
-    if(cityname_Searched != ''){
-        
-        //-- Try to get the forecast
+    // if EU typed anything, attempt to get the forecast
+    if(cityname_Searched != ''){  
         _get_Forecast_City(cityname_Searched);
-    }
+     }
 
-    //-- If didn't type anything
-    else {
-        console.log("search == null")
-    }
 });
 
 
@@ -91,14 +84,15 @@ const _get_Forecast_LatLon = async (lat,lon) => {
             +'&appid=' +apiKey,
             { method: 'GET'}
         );
-        const json = await res.json();
-        console.log("Got results: ",json);
-        _build_Forecast(json);
+        //-- once get a response, convert to JSON and update page
+        const json = await res.json()
+            .then(response =>{
+                // console.log("Got results: ",json);
+                _build_Forecast(response);
+            })  
       })();
       return response;
 };
-
-
 
 function _build_Forecast(response){
     //-- Builds forecast 
@@ -108,20 +102,14 @@ function _build_Forecast(response){
 
     //-- Get days section from HTML
     let days_Section = document.getElementById("days");
-
     //-- store daily JSON
     const days = response.daily;
-
     //-- To count number of days
     let numberDays = 1;
-
-    //-- Itterate through days and build content
+    //-- Itterate through days and build content for the next few days forecast
     for (let day in days){
-        
-        //-- store first day for easy building
+        //-- store first day results for content building
         let day_JSON = days[day];
-
-        
         //--- If the current day, grab the UVI
         if (numberDays == 1) {
             document.getElementById("uvi").innerText = day_JSON.uvi + " uvi";
@@ -204,13 +192,12 @@ const _get_Forecast_City = async (cityName) => {
             _build_Current(json);
             //-- Build forecast and update search History
             _get_Forecast_LatLon(json.coord.lon,json.coord.lat)
-            
-            
-            
             //-- Show forecast section if was hidden
             document.getElementById("forecast_Section").style.display = "flex";
+            //-- Update Search History
+
         }
-        //-- If failed response for some reason, return message
+        //-- If failed response for some reason, return error message
         else {
             
             //-- Hide forecase section if was display visible
@@ -313,32 +300,38 @@ function _build_Current(response){
 
 
 //-- Sets history conatiner with cities
-function _set_Search_History(cityName){
+function _set_Search_History(searchHistory){
     // $( "#searchHistory_Results" );
     // document.getElementById("searchHistory_Results").innerText = cityName;
 
-    console.log(cityName)
+    // console.log(cityNames)
 
     //-- Get current search hsitory HTML
     let searchHistory_Current = document.getElementById("searchHistory_Results").innerHTML;
+    // searchHistory_Current = "";
     
-    //-- Update current history with new search
-    searchHistory_Current = searchHistory_Current + "<span>"+cityName+"</span>";
-    document.getElementById("searchHistory_Results").innerHTML = searchHistory_Current;
+    let searchHistoryHolder = "";
+
+    for(let location in searchHistory) {
+        let cityName = searchHistory[location].cityname;
+        console.log(searchHistory[location].cityname)
+        //-- Update current history with new search
+        searchHistoryHolder = searchHistoryHolder + "<span>" +cityName + "</span>"
+    }
+    document.getElementById("searchHistory_Results").innerHTML = searchHistoryHolder;
 };
 
-
+//-- Extract search history from the database and then update page content with city-name
 function _get_Search_History(){
-
     //-- Get Database
     let database_Current = get_Database();
-
     //-- Get Search History
     let searchHistory = database_Current.userdata['searched']
-
     //-- Grab container
     if (searchHistory){
-        console.log(searchHistory)
+        // console.log(searchHistory)
+        _set_Search_History(searchHistory);
+        
     }
     
 
@@ -435,10 +428,8 @@ function set_Database(entry) {
         // If user already defined in local storage, grab it.
         if (database_Current.userdata != null) {
             // Merge current database.userdata to new placeholder
-            
             userdata_Current = database_Current.userdata;
-            
-            // update last login time
+            // update last login time to now
             userdata_Current.login_Last = datetime_12();
         }
         
