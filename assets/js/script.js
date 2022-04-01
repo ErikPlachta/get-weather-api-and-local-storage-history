@@ -48,22 +48,32 @@ const apiKey ="d5291050dfed6abda18c09f0e663326d";
 /*----------------------------------------------------------------------------*/
 //-- START --> SEARCH
 
-//-- When 
+//-- When searching and input contains text
 $( "#cityname_Search_Btn").click(function(){
     
-    // Clear out containers holding current weather
-    document.getElementById("city").innerHTML = "";
-    document.getElementById("days").innerHTML = "";
-
+    
     // get EU saerch value
     let cityname_Searched = document.getElementById("cityName_Search_Input").value;
     
     // if EU typed anything, attempt to get the forecast
     if(cityname_Searched != ''){  
-        _get_Forecast_City(cityname_Searched); //-- get forcast
-        document.getElementById("cityName_Search_Input").value= ""; //-- erase
-     }
+        //-- get forcast
+        _get_Forecast_City(cityname_Searched)
+            .then(results => {
+                _get_Search_History()
+                //-- clear input
+                document.getElementById("cityName_Search_Input").value= "";
+                // Clear out containers holding current weather
+            })
+            
+            document.getElementById("city").innerHTML = "";
+            document.getElementById("days").innerHTML = "";
+        }
+});
 
+$( "#clear_SearchHistory_Btn").click(function(){
+    localStorage.removeItem(database_Name);
+    document.getElementById("searchHistory_Results").innerHTML = ''; //-- remove all c
 });
 
 
@@ -302,22 +312,14 @@ function _build_Current(response){
 
 //-- Sets history conatiner with cities
 function _set_Search_History(searchHistory){
-    // $( "#searchHistory_Results" );
-    // document.getElementById("searchHistory_Results").innerText = cityName;
 
-    // console.log(cityNames)
-
-    //-- Get current search hsitory HTML
-    let searchHistory_Current = document.getElementById("searchHistory_Results").innerHTML;
-    // searchHistory_Current = "";
-    
     let searchHistoryHolder = "";
 
     for(let dateTime in searchHistory) {
         let cityName = searchHistory[dateTime].cityname;
         let icon = searchHistory[dateTime].icon;
         let temp = searchHistory[dateTime].temp;
-        console.log(cityName,icon,temp)
+        // console.log(cityName,icon,temp)
         //-- Update current history with new search
         searchHistoryHolder = searchHistoryHolder 
         + "<div>"
@@ -338,22 +340,14 @@ function _set_Search_History(searchHistory){
 };
 
 //-- Extract search history from the database and then update page content with city-name
-function _get_Search_History(){
+async function _get_Search_History(){
     //-- Get Database
     let database_Current = get_Database();
     //-- Get Search History
-    let searchHistory = database_Current.userdata['searched']
-    //-- Grab container
-    if (searchHistory){
-        // console.log(searchHistory)
+    let searchHistory = await database_Current.userdata['searched']
+    if(searchHistory){       
         _set_Search_History(searchHistory);
-        
     }
-    
-
-    //-- Set based on history
-
-
 };
 
 /*----------------------------------------------------------------------------*/
@@ -578,19 +572,6 @@ function set_Database(entry) {
         // Add key to dictionary
         database_New.settings[key] = settings_Current[key];
     });
-    
-    //-- TODO:: 03/31/2022 #EP || Commenting out as not needed for MVP
-    // Grab curent API values and merge
-    // Object.keys(api_Current).forEach((key) => {
-    //     // Add key to dictionary
-    //     database_New.api[key] = api_Current[key];
-    // });
-    
-
-    //-- END -> BUILDING DICTIONARY  
-    
-    //  console.log("function set_Database(entry): database_New ", database_New);
-
 
     // END -> MERGING DATA
     //--------------------------------//
@@ -652,15 +633,8 @@ function _load_Database() {
              city: null
            },
         },
-        
-        //-- API SETTINGS
-        // api: {
-        //     openweather: {}
-        // }
     };
     //-- end of database_Default
-
-    // console.log("function _load_Database() database_Default: ",database_Default) //TODO:: 12/08/2021 #EP || Delete console.log once done testing
     
     // Set Default Database 
     set_Database(database_Default);
