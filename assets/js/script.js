@@ -310,27 +310,29 @@ function _set_Search_History(searchHistory){
     let searchHistory_Current = document.getElementById("searchHistory_Results").innerHTML;
     // searchHistory_Current = "";
     
-    let searchHistoryHolder = "<div>";
+    let searchHistoryHolder = "";
 
-    for(let location in searchHistory) {
-        let cityName = searchHistory[location].cityname;
-        let icon = searchHistory[location].icon;
-        let temp = searchHistory[location].temp;
+    for(let dateTime in searchHistory) {
+        let cityName = searchHistory[dateTime].cityname;
+        let icon = searchHistory[dateTime].icon;
+        let temp = searchHistory[dateTime].temp;
         console.log(cityName,icon,temp)
         //-- Update current history with new search
-        searchHistoryHolder = searchHistoryHolder + `<span> ${cityName}`
-        + `<img class="weathericon" src='https://openweathermap.org/img/w/${icon}.png' />` 
-        +`${temp}°`
-        + `</span></div>`
-                // + '<span class="temp">' + day_JSON.temp.day + '°</span>'
-        /* 
+        searchHistoryHolder = searchHistoryHolder 
+        + "<div>"
+            + `<span>`
+                +`${cityName}`
+            +`</span>` //-- city-name searched
+            + `<span class='icon-temp'>`
+                +`<img class="weathericon" src='https://openweathermap.org/img/w/${icon}.png' />` //-- icon from API
+                +`${temp}°`
+            +`</span>` //-- temp in F
+            +`<span class="date-time">${dateTime}</span>` //-- date time
+        +`</div>`
         
-        +'<img class="weathericon" src="https://openweathermap.org/img/w/'
-                    + day_JSON.weather[0].icon 
-                    + '.png">'
-                + '<span class="temp">' + day_JSON.temp.day + '°</span>'
-        */
     }
+
+    // searchHistoryHolder = searchHistoryHolder + `</section>`
     document.getElementById("searchHistory_Results").innerHTML = searchHistoryHolder;
 };
 

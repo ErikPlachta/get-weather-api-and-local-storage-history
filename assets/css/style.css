@@ -220,12 +220,43 @@ input#clear_SearchHistory_Btn {
   justify-content: space-around;
 }
 
-#searchHistory_Results span{
-  padding: 3rem 1rem;
+#searchHistory_Results div{
+  position: relative;
+  flex: 80%;
+  /* padding: 1rem; */
   margin: .5rem;
   border: 1px solid red;
   border-radius: .5rem;
+  grid-gap: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
+
+#searchHistory_Results span{
+  flex: 25%;
+  padding: .25rem;
+  align-items: center;
+  align-content: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+#searchHistory_Results span.icon-temp{  
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#searchHistory_Results span.date-time{ 
+  /* position: absolute; */
+  flex: 50%;
+  width: 100%;
+  /* top: -20px; */
+}
+
 
 input#clear_SearchHistory_Btn {
   margin-top: .5rem;
