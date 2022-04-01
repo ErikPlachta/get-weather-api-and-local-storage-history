@@ -236,6 +236,7 @@ input#clear_SearchHistory_Btn {
 
 #searchHistory_Results div:hover{
   box-shadow: var(--boxShadow_top_hover_black_1a);
+  /* cursor: pointer; */
 }
 
 #searchHistory_Results span{
@@ -255,6 +256,7 @@ input#clear_SearchHistory_Btn {
 
 #searchHistory_Results span.cityname:hover {
   cursor: pointer;
+  zoom: 1.1;
 
 }
 

@@ -144,7 +144,6 @@ function _build_Forecast(response){
                         weekday: 'long'
                     }
                 );
-
             //-- build the day
             div.innerHTML = 
                 
@@ -322,7 +321,7 @@ function _set_Search_History(searchHistory){
         // console.log(cityName,icon,temp)
         //-- Update current history with new search
         searchHistoryHolder = searchHistoryHolder 
-        + "<div>"
+        + "<div class='search-history-element'>"
             + `<span class='cityname'>`
                 +`${cityName}`
             +`</span>` //-- city-name searched
@@ -335,8 +334,24 @@ function _set_Search_History(searchHistory){
         
     }
 
-    // searchHistoryHolder = searchHistoryHolder + `</section>`
+    //-- update page
     document.getElementById("searchHistory_Results").innerHTML = searchHistoryHolder;
+
+    //-- add event listener to the city-name specifically
+    $( ".search-history-element .cityname" ).click(function(event){
+        // console.log(event.target.innerText)
+        let cityname_Searched = event.target.innerText;
+        _get_Forecast_City(cityname_Searched)
+            .then(results => {
+                _get_Search_History()
+                //-- clear input
+                document.getElementById("cityName_Search_Input").value= "";
+                // Clear out containers holding current weather
+            });
+            
+        document.getElementById("city").innerHTML = "";
+        document.getElementById("days").innerHTML = "";
+    });
 };
 
 //-- Extract search history from the database and then update page content with city-name
@@ -758,6 +773,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // $("#cityName_Search_Input").focus();
     }, 100);
 }, false);
+
 
 //-- Browser focus to typing
 
