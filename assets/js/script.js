@@ -60,7 +60,8 @@ $( "#cityname_Search_Btn").click(function(){
     
     // if EU typed anything, attempt to get the forecast
     if(cityname_Searched != ''){  
-        _get_Forecast_City(cityname_Searched);
+        _get_Forecast_City(cityname_Searched); //-- get forcast
+        document.getElementById("cityName_Search_Input").value= ""; //-- erase
      }
 
 });
@@ -320,7 +321,7 @@ function _set_Search_History(searchHistory){
         //-- Update current history with new search
         searchHistoryHolder = searchHistoryHolder 
         + "<div>"
-            + `<span>`
+            + `<span class='cityname'>`
                 +`${cityName}`
             +`</span>` //-- city-name searched
             + `<span class='icon-temp'>`
@@ -779,11 +780,12 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('header').className = 'slideDown';
       document.getElementById('searchHistory_Section').className = 'slideDown';
       _get_Search_History();
+      $("#cityName_Search_Input").trigger('focus');
+      // $("#cityName_Search_Input").focus();
     }, 100);
 }, false);
 
 //-- Browser focus to typing
-$("#cityName_Search_Input").trigger('focus');
 
 //-- ANIMATIONS --> END
 /*----------------------------------------------------------------------------*/

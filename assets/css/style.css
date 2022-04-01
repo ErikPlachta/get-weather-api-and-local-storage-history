@@ -225,12 +225,17 @@ input#clear_SearchHistory_Btn {
   flex: 80%;
   /* padding: 1rem; */
   margin: .5rem;
-  border: 1px solid red;
+  border: var(--border_shadow_1px_25a);
   border-radius: .5rem;
   grid-gap: 1rem;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  transition: ease-in-out 200ms;
+}
+
+#searchHistory_Results div:hover{
+  box-shadow: var(--boxShadow_top_hover_black_1a);
 }
 
 #searchHistory_Results span{
@@ -242,6 +247,15 @@ input#clear_SearchHistory_Btn {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
+}
+
+#searchHistory_Results span.cityname{
+  font-weight: 600;
+}
+
+#searchHistory_Results span.cityname:hover {
+  cursor: pointer;
+
 }
 
 #searchHistory_Results span.icon-temp{  
@@ -350,12 +364,6 @@ section.forecast {
   justify-content: space-evenly;
   -webkit-transition: background .2s ease-in-out;
   transition: background .2s ease-in-out;
-}
-
-/* Container holding the city  */
-#city {
-  /* border: 1px solid red; */
-  
 }
 
 /* Container holding the city  */
