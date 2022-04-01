@@ -480,10 +480,10 @@ function set_Database(entry) {
                         console.log("value : ",userdata_Current[key])
                         // userdata_Current[key] = entry.userdata[key];
                     }
-                    console.log("//-- userdata_Current[key]  == undefined; Need to set as entry value of key: ",key)
+                    // console.log("//-- userdata_Current[key]  == undefined; Need to set as entry value of key: ",key)
                 }
                 else {
-                    console.log("//-- userdata_Current[key]: ",key)
+                    // console.log("//-- userdata_Current[key]: ",key)
                 }
             };
             
@@ -528,15 +528,17 @@ function set_Database(entry) {
         //--If entry provides userdata values
         if (entry.userdata != null){
 
-            for(  let key in userdata_Current){
-                if ( key === 'searched' ) {
-                    console.log(`userdata_Current.key:`,userdata_Current[key])
+            for( let value in userdata_Current){
+                if ( value === 'searched' ) {
+                    console.log(`userdata_Current.value:`,userdata_Current[value])
+                    console.log(entry.userdata.searched)
+
                 }
             }
             // Merge settings_Current together from curent and entry
-            // console.log(userdata_Current.searched)
-            // userdata_Current = Object.assign({},userdata_Current, entry.userdata);
-            // console.log(userdata_Current.searched)
+            console.log(userdata_Current.searched)
+            userdata_Current = Object.assign({},userdata_Current, entry.userdata);
+            console.log(userdata_Current.searched)
         } 
     }; 
 
@@ -549,10 +551,10 @@ function set_Database(entry) {
     
     // Grab current userdata Keys and merge
     Object.keys(userdata_Current).forEach((key) => { 
-        for(let subKey in userdata_Current.key){
-            console.log("subKey")
-            console.log(userdata_Current[key][subKey])
-        }
+        // for(let subKey in userdata_Current.key){
+            // console.log("subKey")
+            // console.log(userdata_Current[key][subKey])
+        // }
         // Add keys to dictionary
         // console.log('//-- userdata_Current.key:', userdata_Current, key);
         // if(key == 'searched'){
