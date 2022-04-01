@@ -400,10 +400,12 @@ function set_Database(entry) {
     /* Use to set database values in Local Storage. Verify, merge, append, and
         updates. 
     */
-    
     //--------------------------------
     //-- LOCAL VAR --> START
-    console.log("set_Database(search_Entry): ", entry)
+    
+    //-- TODO:: 04/01/2022 #EP || DELETE console.log
+    // console.log("set_Database(search_Entry): ", entry)
+    
     // Used to merge existing and new database changes, then written to Local Storage
     let database_New = {userdata:{}, settings:{}};//, api:{} };
     
@@ -491,10 +493,13 @@ function set_Database(entry) {
             /* FOR EACH SEARCH RESULT IN SEARCH HISTORY
 
             */
-            for(let city in entry.userdata.searched){
-                //TODO:: 01/07/2021 #EP || Build this out to actually update
-                console.log(`city:`, entry.userdata.searched[city]);
-            }
+            
+            //TODO:: 04/01/2022 #EP || DELETE THIS ONCE DONE TESTING. Commented out for now because happening on 539
+            //-- If/when a new search is requseted, prints it.
+            // for(let city in entry.userdata.searched){
+            //     //TODO:: 01/07/2021 #EP || Build this out to actually update
+            //     console.log(`city:`, entry.userdata.searched[city]);
+            // }
             
             /* FOR EACH DATE IN TIMELINE
 
@@ -520,6 +525,7 @@ function set_Database(entry) {
         } 
 
         //--If entry provides api values
+        //TODO:: 04/01/2022 #EP || Delete or update. Commented out because not MVP
         // if (entry.api != null){        
         //     // Merge settings_Current together from curent and entry
         //     api_Current = Object.assign({},api_Current, entry.api); 
@@ -530,8 +536,10 @@ function set_Database(entry) {
 
             for( let value in userdata_Current){
                 if ( value === 'searched' ) {
-                    console.log(`userdata_Current.value:`,userdata_Current[value])
-                    console.log(entry.userdata.searched)
+                    let current= JSON.strinigfy(userdata_Current[value]);
+                    console.log(`userdata_Current.value: ${current}`)
+                    let searched = JSON.stringify(entry.userdata.searched)
+                    console.log(`entry.userdata.searched ${searched}`)
 
                 }
             }
@@ -546,10 +554,12 @@ function set_Database(entry) {
     //--------------------------------//
     /* START -> MERGING DATA
         
-        itterates current database and adds 
+        Itterates current database, combines into new to prepare to push new state into local storage
     */ 
     
-    // Grab current userdata Keys and merge
+    //-- USERDATA: DICTIONARY IN LOCAL STORAGE --//
+    
+    //-- Grab current userdata Keys and sub-keys, combine into new obj, 
     Object.keys(userdata_Current).forEach((key) => { 
         // for(let subKey in userdata_Current.key){
             // console.log("subKey")
@@ -571,11 +581,16 @@ function set_Database(entry) {
         // }
     });
     
-    // Grab curent setting keys and merge
+    //-- SETTINGS: DICTIOANRY OBJ IN LOCAL STORAGE --//
+
+    //-- Grab curent setting keys, merge to new OBJ to hold. 
+        //-- ( This is a single-layer OBJ so no need to dig deeper )
     Object.keys(settings_Current).forEach((key) => {
         // Add key to dictionary
         database_New.settings[key] = settings_Current[key];
     });
+    
+    //-- TODO:: 03/31/2022 #EP || Commenting out as not needed for MVP
     // Grab curent API values and merge
     // Object.keys(api_Current).forEach((key) => {
     //     // Add key to dictionary
@@ -587,7 +602,15 @@ function set_Database(entry) {
     
      console.log("function set_Database(entry): database_New ", database_New);
 
-    // Updating Database
+
+    // END -> MERGING DATA
+    //--------------------------------//
+    /* START -> UPDATING EXISTING STATE
+        
+        Overwrites current local storage state with a newly updated copy
+    */ 
+
+    //-- Overwriting existing with new
     localStorage.setItem(database_Name, JSON.stringify(database_New));
 
     return null;
