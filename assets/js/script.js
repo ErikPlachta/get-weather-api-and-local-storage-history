@@ -453,10 +453,11 @@ function set_Database(entry) {
 
     // DATABASE INTEGRITY -> END // 
     //--------------------------------//
-    //-- ENTRY INTEGRITY -> START //
+    //-- ENTRY INTO NEW DATABASESTATE  OBJ HOLDER -> START //
 
     //-- If user action to update database or if _Load_Database() ran.
     if(entry != undefined){
+        console.log(`line 460: entry ${JSON.stringify(entry)}`)
         
         //-- If entry provides userdata values
         if(entry.userdata != null){
@@ -533,20 +534,44 @@ function set_Database(entry) {
 
         //--If entry provides userdata values
         if (entry.userdata != null){
-
+            
+            console.log(`before merge - userdata_Current.searched: ${JSON.stringify(userdata_Current)}`)
             for( let value in userdata_Current){
+                console.log(value)
+                // let login_First = {};
+                // let login_Last = {};
+                // let timeline = {};
+                // let searched = {};
+            
+                // if( value == 'login_First'){
+                //     login_First = entry;
+                // }
+                // if( value == 'login_Last'){
+                //     login_Last = entry;
+                // }
+                // if( value === 'timeline'){
+                //     timeline =  entry;
+                // }
+            
                 if ( value === 'searched' ) {
-                    let current= JSON.strinigfy(userdata_Current[value]);
-                    console.log(`userdata_Current.value: ${current}`)
-                    let searched = JSON.stringify(entry.userdata.searched)
-                    console.log(`entry.userdata.searched ${searched}`)
-
+                    console.log(`userdata_Current.value: ${JSON.stringify(userdata_Current[value])}`)
+                    console.log(`entry.userdata.searched: ${JSON.stringify(entry.userdata.searched)}`)
+                    // entry.userdata.searched = Object.assign({},userdata_Current.searched, entry.userdata.searched);
+                    if(entry.userdata.searched){
+                        for(let searchedCity in entry.userdata.searched){
+                            // console.log(userdata_Current.searched[searchedCity])
+                            // entry.userdata.searched[searchedCity] = userdata_Current.searched[searchedCity];
+                            userdata_Current.searched[searchedCity] = entry.userdata.searched[searchedCity]
+                            console.log("Searched:", entry.userdata.searched[searchedCity])
+                            // entry.userdata.searched
+                            // console.log(`merging searched - userdata_Current`,userdata_Current)
+                        }
+                    }
                 }
+                // console.log(userdata_Current)
+                // userdata_Current = Object.assign({},userdata_Current, entry.userdata);
             }
-            // Merge settings_Current together from curent and entry
-            console.log(userdata_Current.searched)
-            userdata_Current = Object.assign({},userdata_Current, entry.userdata);
-            console.log(userdata_Current.searched)
+            console.log(`after merge - userdata_Current: ${JSON.stringify(userdata_Current)}`)
         } 
     }; 
 
