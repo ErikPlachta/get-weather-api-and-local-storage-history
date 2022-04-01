@@ -536,41 +536,32 @@ function set_Database(entry) {
         if (entry.userdata != null){
             
             console.log(`before merge - userdata_Current.searched: ${JSON.stringify(userdata_Current)}`)
-            for( let value in userdata_Current){
-                console.log(value)
-                // let login_First = {};
-                // let login_Last = {};
-                // let timeline = {};
-                // let searched = {};
-            
-                // if( value == 'login_First'){
-                //     login_First = entry;
-                // }
-                // if( value == 'login_Last'){
-                //     login_Last = entry;
-                // }
-                // if( value === 'timeline'){
-                //     timeline =  entry;
-                // }
-            
-                if ( value === 'searched' ) {
-                    console.log(`userdata_Current.value: ${JSON.stringify(userdata_Current[value])}`)
-                    console.log(`entry.userdata.searched: ${JSON.stringify(entry.userdata.searched)}`)
-                    // entry.userdata.searched = Object.assign({},userdata_Current.searched, entry.userdata.searched);
-                    if(entry.userdata.searched){
-                        for(let searchedCity in entry.userdata.searched){
-                            // console.log(userdata_Current.searched[searchedCity])
-                            // entry.userdata.searched[searchedCity] = userdata_Current.searched[searchedCity];
-                            userdata_Current.searched[searchedCity] = entry.userdata.searched[searchedCity]
-                            console.log("Searched:", entry.userdata.searched[searchedCity])
-                            // entry.userdata.searched
-                            // console.log(`merging searched - userdata_Current`,userdata_Current)
-                        }
+            // for( let value in userdata_Current){
+
+                // if ( value === 'searched' ) {
+                //     console.log(`userdata_Current.value: ${JSON.stringify(userdata_Current[value])}`)
+                //     console.log(`entry.userdata.searched: ${JSON.stringify(entry.userdata.searched)}`)
+                //     // entry.userdata.searched = Object.assign({},userdata_Current.searched, entry.userdata.searched);
+                    
+                    
+                    
+                if(entry.userdata.searched){
+                    if(!userdata_Current.searched){
+                        userdata_Current['searched']={};
+                    }
+                    for(let searchedCity in entry.userdata.searched){
+                        // console.log(userdata_Current.searched[searchedCity])
+                        // entry.userdata.searched[searchedCity] = userdata_Current.searched[searchedCity];
+                        console.log("Searched:", entry.userdata.searched[searchedCity])
+                        userdata_Current.searched[searchedCity] = entry.userdata.searched[searchedCity]
+                        // entry.userdata.searched
+                        // console.log(`merging searched - userdata_Current`,userdata_Current)
                     }
                 }
+                // }
                 // console.log(userdata_Current)
                 // userdata_Current = Object.assign({},userdata_Current, entry.userdata);
-            }
+            // }
             console.log(`after merge - userdata_Current: ${JSON.stringify(userdata_Current)}`)
         } 
     }; 
@@ -668,7 +659,7 @@ function _load_Database() {
                 },
             },
             //-- users saved list. Stores full payload
-            // searched: {},
+            searched: {},
 
             //-- first login ever
             login_First: null,
