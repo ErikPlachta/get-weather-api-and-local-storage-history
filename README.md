@@ -1,4 +1,4 @@
-# get_Weather(city)
+# Get a 7-Day Weather Forecast by City Name
 
 A simple app using the API [Open Weather Map](https://openweathermap.org/api) to get a Weather Forecast for the current time along with the five-day forecast.
 
@@ -29,7 +29,7 @@ A simple app using the API [Open Weather Map](https://openweathermap.org/api) to
   - [x] Responsive header content
   - [ ] Responsive body content
     - [x] Error message popup if no city found
-    - [ ] Content hover effects
-- [ ] Local Storage
+    - [x] Content hover effects
+- [x] Local Storage
   - [x] Local storage framework
-  - [ ] Local storage to store search history
+  - [x] Local storage to store search history

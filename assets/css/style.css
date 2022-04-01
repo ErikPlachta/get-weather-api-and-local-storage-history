@@ -248,6 +248,7 @@ input#clear_SearchHistory_Btn {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
+  transition: ease-in-out 200ms;
 }
 
 #searchHistory_Results span.cityname{

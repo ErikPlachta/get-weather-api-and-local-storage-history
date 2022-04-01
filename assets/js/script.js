@@ -42,7 +42,7 @@ var user_FirstLogin = false;
 
 // https://home.openweathermap.org/api_keys
 // TODO: 03/31/2022 #EP | GET NEW API Key and Make it a env var
-const apiKey ="d5291050dfed6abda18c09f0e663326d";
+const apiKey = "d5291050dfed6abda18c09f0e663326d";
 
 
 /*----------------------------------------------------------------------------*/
