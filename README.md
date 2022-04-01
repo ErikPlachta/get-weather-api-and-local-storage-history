@@ -27,7 +27,7 @@ A simple app using the API [Open Weather Map](https://openweathermap.org/api) to
     - [x] Color scale to indicate uvi severity
   - [x] Display  5-day forecast
   - [x] Responsive header content
-  - [ ] Responsive body content
+  - [x] Responsive body content
     - [x] Error message popup if no city found
     - [x] Content hover effects
 - [x] Local Storage

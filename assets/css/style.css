@@ -466,9 +466,9 @@ div.city {
 
   /*-- Search fit screen and add styling to division more claer */
   #searchHistory_Section{
-    width: 90%;
-    /* margin: auto; */
-    box-shadow: var(--boxShadow_inset_Top);
+    width: 100%;
+    margin: auto;
+    /* box-shadow: var(--boxShadow_inset_Top); */
   }
 }
 

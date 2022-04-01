@@ -68,11 +68,13 @@ $( "#cityname_Search_Btn").click(function(){
             
             document.getElementById("city").innerHTML = "";
             document.getElementById("days").innerHTML = "";
+            window.scrollTo(0, 0);
         }
 });
 
 $( "#clear_SearchHistory_Btn").click(function(){
     localStorage.removeItem(database_Name);
+    window.scrollTo(0, 0);
     document.getElementById("searchHistory_Results").innerHTML = ''; //-- remove all c
 });
 
@@ -164,15 +166,6 @@ function _build_Forecast(response){
         numberDays ++;
     };
     //-- END --> looping through days
-
-
-
-        // build response header
-
-        //build response days
-    
-
-    console.log("//-- END --> function _set_Results(response)")
     return null;
 }
 
@@ -351,6 +344,7 @@ function _set_Search_History(searchHistory){
             
         document.getElementById("city").innerHTML = "";
         document.getElementById("days").innerHTML = "";
+        window.scrollTo(0, 0);
     });
 };
 
@@ -732,7 +726,7 @@ const _set_Location = async function(){
     const PublicIP = await get_PublicIP()
     .then(response => {
         
-        console.log(response)
+        // console.log(response)
         return (response);
     })
 }
