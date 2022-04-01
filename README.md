@@ -22,9 +22,9 @@ A simple app using the API [Open Weather Map](https://openweathermap.org/api) to
 ## TODOs
 
 - [x] API - Connect to Open Weather Map
-- [ ] User Interface
+- [x] User Interface
   - [x] Display current conditions with uvi
-    - [ ] Color scale to indicate uvi severity
+    - [x] Color scale to indicate uvi severity
   - [x] Display  5-day forecast
   - [x] Responsive header content
   - [ ] Responsive body content
