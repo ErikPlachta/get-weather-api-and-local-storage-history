@@ -478,7 +478,7 @@ function set_Database(entry) {
                     }
                     else {
                         console.log("value : ",userdata_Current[key])
-                        userdata_Current[key] = entry.userdata[key];
+                        // userdata_Current[key] = entry.userdata[key];
                     }
                     console.log("//-- userdata_Current[key]  == undefined; Need to set as entry value of key: ",key)
                 }
@@ -487,12 +487,13 @@ function set_Database(entry) {
                 }
             };
             
+            console.log("userdata_Current", userdata_Current)
             /* FOR EACH SEARCH RESULT IN SEARCH HISTORY
 
             */
             for(let city in entry.userdata.searched){
                 //TODO:: 01/07/2021 #EP || Build this out to actually update
-                console.log(`city: ${city}`);
+                console.log(`city:`, entry.userdata.searched[city]);
             }
             
             /* FOR EACH DATE IN TIMELINE
@@ -500,16 +501,16 @@ function set_Database(entry) {
                 Itterate through userdata.timeline dates, update the database.
                 Used when page runs, so if new date on load new timeline entry
             */
-            for(let date in entry.userdata.timeline){
-                //add entry value to what will be written to local storage
-                userdata_Current.timeline[date] = entry.userdata.timeline[date];
+            // for(let date in entry.userdata.timeline){
+            //     //add entry value to what will be written to local storage
+            //     // userdata_Current.timeline[date] = entry.userdata.timeline[date];
                 
-                // if first login for the day
-                if(userdata_Current.timeline[date].login_First == null){
-                    // Set current date and time
-                    userdata_Current.timeline[date].login_First = datetime_12();
-                }
-            }
+            //     // if first login for the day
+            //     if(userdata_Current.timeline[date].login_First == null){
+            //         // Set current date and time
+            //         userdata_Current.timeline[date].login_First = datetime_12();
+            //     }
+            // }
         };
 
         //-- If entry provides setting values
@@ -525,11 +526,17 @@ function set_Database(entry) {
         // }
 
         //--If entry provides userdata values
-        if (entry.userdata != null){        
-            
-            
+        if (entry.userdata != null){
+
+            for(  let key in userdata_Current){
+                if ( key === 'searched' ) {
+                    console.log(`userdata_Current.key:`,userdata_Current[key])
+                }
+            }
             // Merge settings_Current together from curent and entry
-            userdata_Current = Object.assign({},userdata_Current, entry.userdata);
+            // console.log(userdata_Current.searched)
+            // userdata_Current = Object.assign({},userdata_Current, entry.userdata);
+            // console.log(userdata_Current.searched)
         } 
     }; 
 
@@ -541,9 +548,25 @@ function set_Database(entry) {
     */ 
     
     // Grab current userdata Keys and merge
-    Object.keys(userdata_Current).forEach((key) => {    
+    Object.keys(userdata_Current).forEach((key) => { 
+        for(let subKey in userdata_Current.key){
+            console.log("subKey")
+            console.log(userdata_Current[key][subKey])
+        }
         // Add keys to dictionary
+        // console.log('//-- userdata_Current.key:', userdata_Current, key);
+        // if(key == 'searched'){
+        //     for(let subKey in userdata_Current.key) {
+        //         console.log(subKey)
+        //         database_New.userdata[key][subKey] = database_New.userdata[key][subKey]
+        //     }
+        // }
+
+        // else if (key == 'timeline'){}
+
+        // else {
         database_New.userdata[key] = (userdata_Current[key]);
+        // }
     });
     
     // Grab curent setting keys and merge
@@ -617,9 +640,9 @@ function _load_Database() {
         },
         
         //-- API SETTINGS
-        api: {
-            openweather: {}
-        }
+        // api: {
+        //     openweather: {}
+        // }
     };
     //-- end of database_Default
 
@@ -689,7 +712,7 @@ function _set_DemoData(){
         }
     };
 
-    console.log("function _set_DemoData() demo_Database: ",demo_Database) //TODO:: 12/08/2021 #EP || Delete console.log once done testing
+    // console.log("function _set_DemoData() demo_Database: ",demo_Database) //TODO:: 12/08/2021 #EP || Delete console.log once done testing
 
     //Auto builds database overwriting current
     localStorage.setItem("purrfect-friend",JSON.stringify(demo_Database));
