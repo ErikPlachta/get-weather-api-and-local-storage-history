@@ -310,13 +310,26 @@ function _set_Search_History(searchHistory){
     let searchHistory_Current = document.getElementById("searchHistory_Results").innerHTML;
     // searchHistory_Current = "";
     
-    let searchHistoryHolder = "";
+    let searchHistoryHolder = "<div>";
 
     for(let location in searchHistory) {
         let cityName = searchHistory[location].cityname;
-        console.log(searchHistory[location].cityname)
+        let icon = searchHistory[location].icon;
+        let temp = searchHistory[location].temp;
+        console.log(cityName,icon,temp)
         //-- Update current history with new search
-        searchHistoryHolder = searchHistoryHolder + "<span>" +cityName + "</span>"
+        searchHistoryHolder = searchHistoryHolder + `<span> ${cityName}`
+        + `<img class="weathericon" src='https://openweathermap.org/img/w/${icon}.png' />` 
+        +`${temp}°`
+        + `</span></div>`
+                // + '<span class="temp">' + day_JSON.temp.day + '°</span>'
+        /* 
+        
+        +'<img class="weathericon" src="https://openweathermap.org/img/w/'
+                    + day_JSON.weather[0].icon 
+                    + '.png">'
+                + '<span class="temp">' + day_JSON.temp.day + '°</span>'
+        */
     }
     document.getElementById("searchHistory_Results").innerHTML = searchHistoryHolder;
 };
@@ -421,7 +434,7 @@ function set_Database(entry) {
     // Getting local storage database to add to new OBJ to re-write to storage once verified
     let database_Current = get_Database(); 
 
-    console.log("database_Current: ", database_Current)
+    // console.log("database_Current: ", database_Current)
 
     // If a Database in Local Storage already exists, verify & collect keys + content
         //-- NOTE: If not true, it's a new database.
@@ -457,7 +470,7 @@ function set_Database(entry) {
 
     //-- If user action to update database or if _Load_Database() ran.
     if(entry != undefined){
-        console.log(`line 460: entry ${JSON.stringify(entry)}`)
+        // console.log(`line 460: entry ${JSON.stringify(entry)}`)
         
         //-- If entry provides userdata values
         if(entry.userdata != null){
@@ -480,7 +493,7 @@ function set_Database(entry) {
                         // console.log("userdata_Current.login_First value: ",userdata_Current[key]);
                     }
                     else {
-                        console.log("value : ",userdata_Current[key])
+                        // console.log("value : ",userdata_Current[key])
                         // userdata_Current[key] = entry.userdata[key];
                     }
                     // console.log("//-- userdata_Current[key]  == undefined; Need to set as entry value of key: ",key)
@@ -490,7 +503,7 @@ function set_Database(entry) {
                 }
             };
             
-            console.log("userdata_Current", userdata_Current)
+            // console.log("userdata_Current", userdata_Current)
             /* FOR EACH SEARCH RESULT IN SEARCH HISTORY
 
             */
@@ -525,45 +538,19 @@ function set_Database(entry) {
             settings_Current = Object.assign({},settings_Current, entry.settings);            
         } 
 
-        //--If entry provides api values
-        //TODO:: 04/01/2022 #EP || Delete or update. Commented out because not MVP
-        // if (entry.api != null){        
-        //     // Merge settings_Current together from curent and entry
-        //     api_Current = Object.assign({},api_Current, entry.api); 
-        // }
 
-        //--If entry provides userdata values
-        if (entry.userdata != null){
+        //--If a saerch request is made
+        if(entry.userdata.searched){
             
-            console.log(`before merge - userdata_Current.searched: ${JSON.stringify(userdata_Current)}`)
-            // for( let value in userdata_Current){
-
-                // if ( value === 'searched' ) {
-                //     console.log(`userdata_Current.value: ${JSON.stringify(userdata_Current[value])}`)
-                //     console.log(`entry.userdata.searched: ${JSON.stringify(entry.userdata.searched)}`)
-                //     // entry.userdata.searched = Object.assign({},userdata_Current.searched, entry.userdata.searched);
-                    
-                    
-                    
-                if(entry.userdata.searched){
-                    if(!userdata_Current.searched){
-                        userdata_Current['searched']={};
-                    }
-                    for(let searchedCity in entry.userdata.searched){
-                        // console.log(userdata_Current.searched[searchedCity])
-                        // entry.userdata.searched[searchedCity] = userdata_Current.searched[searchedCity];
-                        console.log("Searched:", entry.userdata.searched[searchedCity])
-                        userdata_Current.searched[searchedCity] = entry.userdata.searched[searchedCity]
-                        // entry.userdata.searched
-                        // console.log(`merging searched - userdata_Current`,userdata_Current)
-                    }
-                }
-                // }
-                // console.log(userdata_Current)
-                // userdata_Current = Object.assign({},userdata_Current, entry.userdata);
-            // }
-            console.log(`after merge - userdata_Current: ${JSON.stringify(userdata_Current)}`)
-        } 
+            //-- if first time a search is happening, create a obj for it
+            if(!userdata_Current.searched){     userdata_Current['searched']={}; }
+            
+            //-- for each search request, merge with userdata_Current. ( should always just be one atm )
+            for(let searchedCity in entry.userdata.searched){
+                userdata_Current.searched[searchedCity] = entry.userdata.searched[searchedCity]
+            }
+        }
+        
     }; 
 
     //-- END --> ENTRY INTEGRITY
@@ -577,24 +564,7 @@ function set_Database(entry) {
     
     //-- Grab current userdata Keys and sub-keys, combine into new obj, 
     Object.keys(userdata_Current).forEach((key) => { 
-        // for(let subKey in userdata_Current.key){
-            // console.log("subKey")
-            // console.log(userdata_Current[key][subKey])
-        // }
-        // Add keys to dictionary
-        // console.log('//-- userdata_Current.key:', userdata_Current, key);
-        // if(key == 'searched'){
-        //     for(let subKey in userdata_Current.key) {
-        //         console.log(subKey)
-        //         database_New.userdata[key][subKey] = database_New.userdata[key][subKey]
-        //     }
-        // }
-
-        // else if (key == 'timeline'){}
-
-        // else {
         database_New.userdata[key] = (userdata_Current[key]);
-        // }
     });
     
     //-- SETTINGS: DICTIOANRY OBJ IN LOCAL STORAGE --//
@@ -616,7 +586,7 @@ function set_Database(entry) {
 
     //-- END -> BUILDING DICTIONARY  
     
-     console.log("function set_Database(entry): database_New ", database_New);
+    //  console.log("function set_Database(entry): database_New ", database_New);
 
 
     // END -> MERGING DATA
