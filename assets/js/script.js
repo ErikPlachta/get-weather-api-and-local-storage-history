@@ -1,4 +1,3 @@
-
 /*
     Author(s): Erik Plachta
     Date: 12/07/2021
@@ -17,6 +16,8 @@
 /* -------------------------------------------------------------------------- */
 //-- GLOBALS -> START
 
+//-- Location awareness from ISP
+import {get_PublicIP } from './location.js';
 
 // For local storage DB
 var database_Name = "weather";
@@ -39,36 +40,42 @@ const datetime_12 = function() { return moment().format("YYYYMMDD hh:mm:ss:ms a"
 //-- event specific globals
 var user_FirstLogin = false;
 
-
 // https://home.openweathermap.org/api_keys
-const apiKey ="d5291050dfed6abda18c09f0e663326d";
+// TODO: 03/31/2022 #EP | GET NEW API Key and Make it a env var
+const apiKey = "d5291050dfed6abda18c09f0e663326d";
 
 
 /*----------------------------------------------------------------------------*/
 //-- START --> SEARCH
 
-
-//-- When 
+//-- When searching and input contains text
 $( "#cityname_Search_Btn").click(function(){
     
-    // Clear out containers holding current weather
-    document.getElementById("city").innerHTML = "";
-    document.getElementById("days").innerHTML = "";
-
+    
     // get EU saerch value
     let cityname_Searched = document.getElementById("cityName_Search_Input").value;
     
-    // if EU typed anything
-    if(cityname_Searched != ''){
-        
-        //-- Try to get the forecast
-        _get_Forecast_City(cityname_Searched);
-    }
+    // if EU typed anything, attempt to get the forecast
+    if(cityname_Searched != ''){  
+        //-- get forcast
+        _get_Forecast_City(cityname_Searched)
+            .then(results => {
+                _get_Search_History()
+                //-- clear input
+                document.getElementById("cityName_Search_Input").value= "";
+                // Clear out containers holding current weather
+            })
+            
+            document.getElementById("city").innerHTML = "";
+            document.getElementById("days").innerHTML = "";
+            window.scrollTo(0, 0);
+        }
+});
 
-    //-- If didn't type anything
-    else {
-        console.log("search == null")
-    }
+$( "#clear_SearchHistory_Btn").click(function(){
+    localStorage.removeItem(database_Name);
+    window.scrollTo(0, 0);
+    document.getElementById("searchHistory_Results").innerHTML = ''; //-- remove all c
 });
 
 
@@ -90,14 +97,15 @@ const _get_Forecast_LatLon = async (lat,lon) => {
             +'&appid=' +apiKey,
             { method: 'GET'}
         );
-        const json = await res.json();
-        console.log("Got results: ",json);
-        _build_Forecast(json)
+        //-- once get a response, convert to JSON and update page
+        const json = await res.json()
+            .then(response =>{
+                // console.log("Got results: ",json);
+                _build_Forecast(response);
+            })  
       })();
       return response;
 };
-
-
 
 function _build_Forecast(response){
     //-- Builds forecast 
@@ -107,20 +115,14 @@ function _build_Forecast(response){
 
     //-- Get days section from HTML
     let days_Section = document.getElementById("days");
-
     //-- store daily JSON
     const days = response.daily;
-
     //-- To count number of days
     let numberDays = 1;
-
-    //-- Itterate through days and build content
-    for (day in days){
-        
-        //-- store first day for easy building
+    //-- Itterate through days and build content for the next few days forecast
+    for (let day in days){
+        //-- store first day results for content building
         let day_JSON = days[day];
-
-        
         //--- If the current day, grab the UVI
         if (numberDays == 1) {
             document.getElementById("uvi").innerText = day_JSON.uvi + " uvi";
@@ -144,7 +146,6 @@ function _build_Forecast(response){
                         weekday: 'long'
                     }
                 );
-
             //-- build the day
             div.innerHTML = 
                 
@@ -165,15 +166,6 @@ function _build_Forecast(response){
         numberDays ++;
     };
     //-- END --> looping through days
-
-
-
-        // build response header
-
-        //build response days
-    
-
-    console.log("//-- END --> function _set_Results(response)")
     return null;
 }
 
@@ -197,13 +189,19 @@ const _get_Forecast_City = async (cityName) => {
         const json = await res.json();
         // console.log("Got results: ",json);
         
+        //-- If successful response, update content
         if(json.cod == 200){
-            _build_Current(json)
+            //-- Build current data for city
+            _build_Current(json);
+            //-- Build forecast and update search History
             _get_Forecast_LatLon(json.coord.lon,json.coord.lat)
-            
-            //-- Hide forecase section if was display hidden
+            //-- Show forecast section if was hidden
             document.getElementById("forecast_Section").style.display = "flex";
-        } else {
+            //-- Update Search History
+
+        }
+        //-- If failed response for some reason, return error message
+        else {
             
             //-- Hide forecase section if was display visible
             // document.getElementById("forecast_Section").innerHTML = "Test";
@@ -287,7 +285,7 @@ function _build_Current(response){
     city_Section.appendChild(city_Div);
 
       //-- Add to local storage
-    search_Entry= {
+    const search_Entry = {
         // Where it's to be stored
         userdata: {
             // Data stored
@@ -301,8 +299,65 @@ function _build_Current(response){
         },
     };
     set_Database(search_Entry);
+};
+
+
+//-- Sets history conatiner with cities
+function _set_Search_History(searchHistory){
+
+    let searchHistoryHolder = "";
+
+    for(let dateTime in searchHistory) {
+        let cityName = searchHistory[dateTime].cityname;
+        let icon = searchHistory[dateTime].icon;
+        let temp = searchHistory[dateTime].temp;
+        // console.log(cityName,icon,temp)
+        //-- Update current history with new search
+        searchHistoryHolder = searchHistoryHolder 
+        + "<div class='search-history-element'>"
+            + `<span class='cityname'>`
+                +`${cityName}`
+            +`</span>` //-- city-name searched
+            + `<span class='icon-temp'>`
+                +`<img class="weathericon" src='https://openweathermap.org/img/w/${icon}.png' />` //-- icon from API
+                +`${temp}°`
+            +`</span>` //-- temp in F
+            +`<span class="date-time">${dateTime}</span>` //-- date time
+        +`</div>`
+        
     }
 
+    //-- update page
+    document.getElementById("searchHistory_Results").innerHTML = searchHistoryHolder;
+
+    //-- add event listener to the city-name specifically
+    $( ".search-history-element .cityname" ).click(function(event){
+        // console.log(event.target.innerText)
+        let cityname_Searched = event.target.innerText;
+        _get_Forecast_City(cityname_Searched)
+            .then(results => {
+                _get_Search_History()
+                //-- clear input
+                document.getElementById("cityName_Search_Input").value= "";
+                // Clear out containers holding current weather
+            });
+            
+        document.getElementById("city").innerHTML = "";
+        document.getElementById("days").innerHTML = "";
+        window.scrollTo(0, 0);
+    });
+};
+
+//-- Extract search history from the database and then update page content with city-name
+async function _get_Search_History(){
+    //-- Get Database
+    let database_Current = get_Database();
+    //-- Get Search History
+    let searchHistory = await database_Current.userdata['searched']
+    if(searchHistory){       
+        _set_Search_History(searchHistory);
+    }
+};
 
 /*----------------------------------------------------------------------------*/
 /*-- DATABASE MANAGEMENT --> START
@@ -332,7 +387,6 @@ function _build_Current(response){
 function get_Database(){
     // Use to to get the current database in JSON format. Always returns dict.
 
-    
     // Get Database from local storage, build into JSON dict
     let database_Current = JSON.parse(localStorage.getItem(database_Name));
     
@@ -365,17 +419,19 @@ function set_Database(entry) {
     /* Use to set database values in Local Storage. Verify, merge, append, and
         updates. 
     */
-    
     //--------------------------------
     //-- LOCAL VAR --> START
-
+    
+    //-- TODO:: 04/01/2022 #EP || DELETE console.log
+    // console.log("set_Database(search_Entry): ", entry)
+    
     // Used to merge existing and new database changes, then written to Local Storage
-    let database_New = {userdata:{}, settings:{}, api:{} };
+    let database_New = {userdata:{}, settings:{}};//, api:{} };
     
     // Used to hold current database values if they exist
     let userdata_Current = {};
     let settings_Current = {};
-    let api_Current = {};
+    // let api_Current = {};
     
     //-- LOCAL VAR --> END
     //--------------------------------
@@ -383,6 +439,8 @@ function set_Database(entry) {
     
     // Getting local storage database to add to new OBJ to re-write to storage once verified
     let database_Current = get_Database(); 
+
+    // console.log("database_Current: ", database_Current)
 
     // If a Database in Local Storage already exists, verify & collect keys + content
         //-- NOTE: If not true, it's a new database.
@@ -392,8 +450,7 @@ function set_Database(entry) {
         if (database_Current.userdata != null) {
             // Merge current database.userdata to new placeholder
             userdata_Current = database_Current.userdata;
-            
-            // update last login time
+            // update last login time to now
             userdata_Current.login_Last = datetime_12();
         }
         
@@ -403,54 +460,82 @@ function set_Database(entry) {
         }
 
          // If API already defined in local storage, grab it.
-         if (database_Current.api != null) {
-            api_Current = database_Current.api;
-        }
+        //  if (database_Current.api != null) {
+        //     api_Current = database_Current.api;
+        // }
     }
-    
     // Database not yet built so set some default values
-    else {
-            
+    else {    
         // First login for the user, so update value.
         userdata_Current['login_First'] = datetime_12();   
     }
 
     // DATABASE INTEGRITY -> END // 
     //--------------------------------//
-    //-- ENTRY INTEGRITY -> START //
-
-    //-- TODO:: 12/08/2021 #EP || If the entry fits required params or not. ( a later thing )
+    //-- ENTRY INTO NEW DATABASESTATE  OBJ HOLDER -> START //
 
     //-- If user action to update database or if _Load_Database() ran.
     if(entry != undefined){
+        // console.log(`line 460: entry ${JSON.stringify(entry)}`)
         
         //-- If entry provides userdata values
         if(entry.userdata != null){
             
             // Build userdata results
-            for (key in entry.userdata){
+            for (var key in entry.userdata){
                 
+                // console.log(`// key - entry.userdata[key]:${key} - ${JSON.stringify(entry.userdata[key])}`)
+                let key_Holder = entry.userdata[key];
+
                 // IF userdata key not yet defined in database, add it.
                 if(userdata_Current[key] == undefined){                
-                    userdata_Current[key] = entry.userdata[key];
+                    
+                    //-- if it's the first time logging in, ever
+                    if(key === 'login_First'){
+                        //-- set the first login value - to be merged below
+                        entry.login_First = datetime_12();
+                        
+                        // console.log("entry.login_First value: ",entry[key]);
+                        // console.log("userdata_Current.login_First value: ",userdata_Current[key]);
+                    }
+                    else {
+                        // console.log("value : ",userdata_Current[key])
+                        // userdata_Current[key] = entry.userdata[key];
+                    }
+                    // console.log("//-- userdata_Current[key]  == undefined; Need to set as entry value of key: ",key)
+                }
+                else {
+                    // console.log("//-- userdata_Current[key]: ",key)
                 }
             };
+            
+            // console.log("userdata_Current", userdata_Current)
+            /* FOR EACH SEARCH RESULT IN SEARCH HISTORY
+
+            */
+            
+            //TODO:: 04/01/2022 #EP || DELETE THIS ONCE DONE TESTING. Commented out for now because happening on 539
+            //-- If/when a new search is requseted, prints it.
+            // for(let city in entry.userdata.searched){
+            //     //TODO:: 01/07/2021 #EP || Build this out to actually update
+            //     console.log(`city:`, entry.userdata.searched[city]);
+            // }
             
             /* FOR EACH DATE IN TIMELINE
 
                 Itterate through userdata.timeline dates, update the database.
                 Used when page runs, so if new date on load new timeline entry
             */
-            for(date in entry.userdata.timeline){
-                //add entry value to what will be written to local storage
-                userdata_Current.timeline[date] = entry.userdata.timeline[date];
+            // for(let date in entry.userdata.timeline){
+            //     //add entry value to what will be written to local storage
+            //     // userdata_Current.timeline[date] = entry.userdata.timeline[date];
                 
-                // if first login for the day
-                if(userdata_Current.timeline[date].login_First == null){
-                    // Set current date and time
-                    userdata_Current.timeline[date].login_First = datetime_12();
-                }
-            }
+            //     // if first login for the day
+            //     if(userdata_Current.timeline[date].login_First == null){
+            //         // Set current date and time
+            //         userdata_Current.timeline[date].login_First = datetime_12();
+            //     }
+            // }
         };
 
         //-- If entry provides setting values
@@ -459,45 +544,52 @@ function set_Database(entry) {
             settings_Current = Object.assign({},settings_Current, entry.settings);            
         } 
 
-        //--If entry provides api values
-        if (entry.searched != null){        
-            // TODO:: 12/08/2021 #EP || Confirm if this is working once api data in
+
+        //--If a saerch request is made
+        if(entry.userdata.searched){
             
-            // Merge settings_Current together from curent and entry
-            api_Current = Object.assign({},api_Current, entry.api);
-        } 
+            //-- if first time a search is happening, create a obj for it
+            if(!userdata_Current.searched){     userdata_Current['searched']={}; }
+            
+            //-- for each search request, merge with userdata_Current. ( should always just be one atm )
+            for(let searchedCity in entry.userdata.searched){
+                userdata_Current.searched[searchedCity] = entry.userdata.searched[searchedCity]
+            }
+        }
+        
     }; 
 
     //-- END --> ENTRY INTEGRITY
     //--------------------------------//
     /* START -> MERGING DATA
         
-        itterates current database and adds 
+        Itterates current database, combines into new to prepare to push new state into local storage
     */ 
     
-    // Grab current userdata Keys and merge
-    Object.keys(userdata_Current).forEach((key) => {    
-        // Add keys to dictionary
+    //-- USERDATA: DICTIONARY IN LOCAL STORAGE --//
+    
+    //-- Grab current userdata Keys and sub-keys, combine into new obj, 
+    Object.keys(userdata_Current).forEach((key) => { 
         database_New.userdata[key] = (userdata_Current[key]);
     });
     
-    // Grab curent setting keys and merge
+    //-- SETTINGS: DICTIOANRY OBJ IN LOCAL STORAGE --//
+
+    //-- Grab curent setting keys, merge to new OBJ to hold. 
+        //-- ( This is a single-layer OBJ so no need to dig deeper )
     Object.keys(settings_Current).forEach((key) => {
         // Add key to dictionary
         database_New.settings[key] = settings_Current[key];
     });
-    // Grab curent API values and merge
-    Object.keys(api_Current).forEach((key) => {
-        // Add key to dictionary
-        database_New.api[key] = api_Current[key];
-    });
-    
 
-    //-- END -> BUILDING DICTIONARY  
-    
-    //  console.log("function set_Database(entry): database_New ", database_New);
+    // END -> MERGING DATA
+    //--------------------------------//
+    /* START -> UPDATING EXISTING STATE
+        
+        Overwrites current local storage state with a newly updated copy
+    */ 
 
-    // Updating Database
+    //-- Overwriting existing with new
     localStorage.setItem(database_Name, JSON.stringify(database_New));
 
     return null;
@@ -533,7 +625,7 @@ function _load_Database() {
             searched: {},
 
             //-- first login ever
-            login_First: null, //TODO:: 12/08/2021 #EP || Make only update once
+            login_First: null,
             //-- last login ever.
             login_Last: datetime_12(),
         },
@@ -550,15 +642,8 @@ function _load_Database() {
              city: null
            },
         },
-        
-        //-- API SETTINGS
-        api: {
-            openweather: {}
-        }
     };
     //-- end of database_Default
-
-    // console.log("function _load_Database() database_Default: ",database_Default) //TODO:: 12/08/2021 #EP || Delete console.log once done testing
     
     // Set Default Database 
     set_Database(database_Default);
@@ -624,7 +709,7 @@ function _set_DemoData(){
         }
     };
 
-    console.log("function _set_DemoData() demo_Database: ",demo_Database) //TODO:: 12/08/2021 #EP || Delete console.log once done testing
+    // console.log("function _set_DemoData() demo_Database: ",demo_Database) //TODO:: 12/08/2021 #EP || Delete console.log once done testing
 
     //Auto builds database overwriting current
     localStorage.setItem("purrfect-friend",JSON.stringify(demo_Database));
@@ -636,6 +721,16 @@ function _set_DemoData(){
 /*----------------------------------------------------------------------------*/
 //-- RUNNING --> START
 
+const _set_Location = async function(){
+    
+    const PublicIP = await get_PublicIP()
+    .then(response => {
+        
+        // console.log(response)
+        return (response);
+    })
+}
+
 
 function run(){
     
@@ -645,7 +740,7 @@ function run(){
     if (testing != true){
         /* 1. Load the database */
         _load_Database();
-
+        // _set_Location();
     }
     else {
         console.log("//-- RUNNING TEST")    
@@ -655,7 +750,7 @@ function run(){
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 };
-  
+
 
 run();
 
@@ -666,11 +761,15 @@ run();
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(function() {
       document.getElementById('header').className = 'slideDown';
+      document.getElementById('searchHistory_Section').className = 'slideDown';
+      _get_Search_History();
+      $("#cityName_Search_Input").trigger('focus');
+      // $("#cityName_Search_Input").focus();
     }, 100);
 }, false);
 
+
 //-- Browser focus to typing
-$("#cityName_Search_Input").trigger('focus');
 
 //-- ANIMATIONS --> END
 /*----------------------------------------------------------------------------*/

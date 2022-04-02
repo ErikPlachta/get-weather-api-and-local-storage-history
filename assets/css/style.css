@@ -181,28 +181,104 @@ input#cityname_Search_Btn {
 }
 
 /*-- Container holding Search History */
-#section_SearchHistory{
-  
-  width: 25%;
-  height: 10rem;
-  float: right;
+#searchHistory_Section{
+  margin-top: 1rem;
+  width: 100%;
+  /* float: right; */
   /* border: 1px solid red; */
   text-align: center;
-  
-  display: none;
-
-  /* display: flex; */
+  display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: center; 
+  align-items: center;
 }
+
+#searchHistory_Title{
+  margin: 2rem 0;
+  width: 70%;
+  /* flex: 100%;
+  flex: 1 50%; */
+}
+/* #searchHistory_Section h3{ */
+  
 
 /*-- Search History Button */
 input#clear_SearchHistory_Btn {
   border-radius: 0 0 .5rem .5rem;
   max-height: 3rem;
+  flex: 1;
 }
 
+/*-- The container holding historical results */
+#searchHistory_Results{
+  /* margin: auto; */
+  width: 70%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+#searchHistory_Results div{
+  position: relative;
+  flex: 80%;
+  /* padding: 1rem; */
+  margin: .5rem;
+  border: var(--border_shadow_1px_25a);
+  border-radius: .5rem;
+  grid-gap: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  transition: ease-in-out 200ms;
+}
+
+#searchHistory_Results div:hover{
+  box-shadow: var(--boxShadow_top_hover_black_1a);
+  /* cursor: pointer; */
+}
+
+#searchHistory_Results span{
+  flex: 25%;
+  padding: .25rem;
+  align-items: center;
+  align-content: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  transition: ease-in-out 200ms;
+}
+
+#searchHistory_Results span.cityname{
+  font-weight: 600;
+}
+
+#searchHistory_Results span.cityname:hover {
+  cursor: pointer;
+  zoom: 1.1;
+
+}
+
+#searchHistory_Results span.icon-temp{  
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#searchHistory_Results span.date-time{ 
+  /* position: absolute; */
+  flex: 50%;
+  width: 100%;
+  /* top: -20px; */
+}
+
+
+input#clear_SearchHistory_Btn {
+  margin-top: .5rem;
+  width: 100%;
+}
 
 /*-- Styling for both Buttons */
 input#clear_SearchHistory_Btn,
@@ -281,7 +357,7 @@ section.banner{
 
 section.forecast {
   margin: auto;
-  width:70%;
+  width:100%;
   border-radius: .5rem;
   /* flex: 2; */
   background-color: var(--bg_Body);
@@ -291,12 +367,6 @@ section.forecast {
   justify-content: space-evenly;
   -webkit-transition: background .2s ease-in-out;
   transition: background .2s ease-in-out;
-}
-
-/* Container holding the city  */
-#city {
-  /* border: 1px solid red; */
-  
 }
 
 /* Container holding the city  */
@@ -395,11 +465,10 @@ div.city {
   }
 
   /*-- Search fit screen and add styling to division more claer */
-  #section_SearchHistory{
-    display: none;
-    width: 90%;
+  #searchHistory_Section{
+    width: 100%;
     margin: auto;
-    box-shadow: var(--boxShadow_inset_Top);
+    /* box-shadow: var(--boxShadow_inset_Top); */
   }
 }
 
