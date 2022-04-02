@@ -3,3 +3,5 @@ _ARCHIVE
 code.code-workspace
 desktop.ini
 .DS_Store 
+.vscode
+
