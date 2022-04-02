@@ -91,7 +91,7 @@ const _get_Forecast_LatLon = async (lat,lon) => {
     const response = (async () => {
         
         // https://openweathermap.org/api/one-call-api
-        const res = await fetch('https://api.openweathermap.org/data/2.5/onecall?lat=35.2271&lon=-80.8431'
+        const res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}`
             +'&exclude=hourly,minutely,current'
             +'&units=imperial'
             +'&appid=' +apiKey,
@@ -126,6 +126,28 @@ function _build_Forecast(response){
         //--- If the current day, grab the UVI
         if (numberDays == 1) {
             document.getElementById("uvi").innerText = day_JSON.uvi + " uvi";
+            
+
+            if(day_JSON.uvi < 1 ){
+                document.getElementById("uvi").style.backgroundColor="green";
+            }
+            else if(day_JSON.uvi < 2 ){
+                document.getElementById("uvi").style.backgroundColor="yellow";
+            }
+            else if(day_JSON.uvi < 3 ){
+                document.getElementById("uvi").style.backgroundColor="orange";
+            }
+            else if(day_JSON.uvi < 4 ){
+                document.getElementById("uvi").style.backgroundColor="orange";
+            }
+            else if(day_JSON.uvi < 5 ){
+                document.getElementById("uvi").style.backgroundColor="tomato";
+            }
+            else if(day_JSON.uvi > 5 ){
+                console.log("AHH!")
+                document.getElementById("uvi").style.backgroundColor="red";
+            }
+            
         };
 
         //-- If day 1 - 5, build content
@@ -194,7 +216,7 @@ const _get_Forecast_City = async (cityName) => {
             //-- Build current data for city
             _build_Current(json);
             //-- Build forecast and update search History
-            _get_Forecast_LatLon(json.coord.lon,json.coord.lat)
+            _get_Forecast_LatLon(json.coord.lat,json.coord.lon)
             //-- Show forecast section if was hidden
             document.getElementById("forecast_Section").style.display = "flex";
             //-- Update Search History
@@ -248,7 +270,7 @@ function fade(element) {
 
 
 function _build_Current(response){
-    console.log(response);
+    // console.log(response);
     //--------------------------------------------------------------------------
     //-- Start building city header
 

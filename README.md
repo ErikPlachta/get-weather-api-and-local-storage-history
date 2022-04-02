@@ -6,7 +6,7 @@ A simple app using the API [Open Weather Map](https://openweathermap.org/api) to
 
 ## [Enter a city name for current weather and a 5-Day forecast ( link )](https://erikplachta.github.io/get_Weather_arg_City/)
 
-[![Example](./assets/images/demo1.png)](https://erikplachta.github.io/get_Weather_arg_City/)
+[![Example](./assets/images/demo1.png)](https://erikplachta.github.io/get-weather-api-and-local-storage-history//)
 
 ---
 ## Contact Me
@@ -23,8 +23,8 @@ A simple app using the API [Open Weather Map](https://openweathermap.org/api) to
 
 - [x] API - Connect to Open Weather Map
 - [x] User Interface
-  - [x] Display current conditions with uvi
-    - [x] Color scale to indicate uvi severity
+  - [ ] Display current conditions with uvi
+    - [ ] Color scale to indicate uvi severity
   - [x] Display  5-day forecast
   - [x] Responsive header content
   - [x] Responsive body content
